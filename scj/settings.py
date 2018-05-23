@@ -37,14 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'agenda.apps.AgendaConfig',
 
     'crispy_forms',
     'django_select2',
     'easy_thumbnails',
     'image_cropping',
     'django_ajax',
-    'cruds_adminlte'
+    'cruds_adminlte',
+
+    'gabinete.apps.GabineteConfig',
+    'agenda.apps.AgendaConfig',
+    'oficios.apps.OficiosConfig',
 ]
 
 MIDDLEWARE = [
@@ -147,4 +150,6 @@ DATE_FORMAT="m/d/Y"
 TIME_INPUT_FORMATS = ['%I:%M %p']
 
 # Locale configuration
-LOCALE_PATHS = (os.path.dirname(BASE_DIR+'locale/'), )
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, "locale"),
+)

@@ -1,0 +1,180 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-16 03:21+0000\n"
+"PO-Revision-Date: 2018-05-16 03:31+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"Language: zxx\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Loco-Source-Locale: pt_BR\n"
+"X-Loco-Parser: loco_parse_po\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/crud.py:619
+#, python-format
+msgid "Can see available %s"
+msgstr "Pode ver %s disponíveis"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/adminlte/lib/_main_header.html:49
+msgid "Change password"
+msgstr "Alterar senha"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/_form.html:25
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/ajax/_form.html:35
+msgid "Submit"
+msgstr "Enviar"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/_form.html:27
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/ajax/list.html:55
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/list.html:114
+msgid "Delete"
+msgstr "Excluir"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/ajax/_form.html:39
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/ajax/delete.html:29
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/ajax/create.html:8
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/create.html:21
+msgid "New"
+msgstr "Novo"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/ajax/delete.html:7
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/delete.html:5
+msgid "Remove"
+msgstr "Excluir"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/ajax/delete.html:11
+msgid "Do you really want to remove:"
+msgstr "Você quer mesmo excluir:"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/ajax/delete.html:24
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/delete.html:11
+msgid "Confirm remove"
+msgstr "Confirmar exclusão"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/ajax/list.html:14
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/list.html:87
+msgid "Actions"
+msgstr "Ações"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/ajax/list.html:35
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/list.html:106
+msgid "Show"
+msgstr "Mostrar"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/ajax/list.html:45
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/ajax/update.html:8
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/detail.html:18
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/list.html:110
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/update.html:22
+msgid "Edit"
+msgstr "Editar"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/ajax/list.html:64
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/list.html:124
+msgid "No items yet."
+msgstr "Nenhum item ainda."
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/create.html:4
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/create.html:7
+msgid "Create new"
+msgstr "Criar novo"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/create.html:15
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/update.html:16
+msgid "Back to"
+msgstr "Voltar para"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/detail.html:5
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/detail.html:8
+msgid "Detail of"
+msgstr "Detalhes de"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/detail.html:25
+msgid "Label"
+msgstr "Rótulo"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/detail.html:25
+msgid "Value"
+msgstr "Valor"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/detail.html:35
+msgid "Back to list"
+msgstr "Voltar para lista"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/list.html:5 
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/list.html:8
+msgid "List of"
+msgstr "Lista de"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/list.html:23
+msgid "Create new "
+msgstr "Criar novo"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/list.html:31
+msgid "Search for..."
+msgstr "Busca por..."
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/list.html:48
+msgid "Filters"
+msgstr "Filtros"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/list.html:66
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/filter/forms.html:14
+msgid "Filter"
+msgstr "Filtro"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/list.html:67
+msgid "Clean filter"
+msgstr "Limpar filtro"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/pagination/prev_next.html:8
+msgid "Previous"
+msgstr "Anterior"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/pagination/prev_next.html:12
+msgid "Page"
+msgstr "Página"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/pagination/prev_next.html:12
+msgid "of"
+msgstr "de"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/pagination/prev_next.html:16
+msgid "Next"
+msgstr "Próximo"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/update.html:5
+#:  
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/update.html:8
+msgid "Update"
+msgstr "Atualizar"
+
+#: venv/lib/python3.5/site-packages/cruds_adminlte/templates/cruds/update.html:61
+msgid "Create"
+msgstr "Criar"
