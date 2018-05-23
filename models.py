@@ -1,9 +1,14 @@
 from django.db import models
 
 
+class Pais(models.Model):
+    nome = models.CharField(max_length=60)
+
+
 class Estado(models.Model):
     nome = models.CharField(max_length=60)
     sigla = models.CharField(max_length=2)
+    pais = models.ForeignKey('Pais', on_delete=models.PROTECT)
 
 
 class Cidade(models.Model):
@@ -12,9 +17,25 @@ class Cidade(models.Model):
 
 
 class Deputado(models.Model):
-    # TODO: dados do deputado, endereços e contatos
+    genero = models.CharField('Gênero', max_length=1, choices=[('M', 'Masculino'), ('F', 'Feminino')])
+    tratamento = models.CharField(max_length=60, blank=True, null=True)
     nome = models.CharField(max_length=60)
+    partido = models.ForeignKey('Partido', on_delete=models.PROTECT)
+    mensagem = models.CharField(max_length=60, null=True, blank=True)
     ativo = models.BooleanField(default=True)
+
+
+class EnderecoDeputado(models.Model):
+    deputado = models.ForeignKey('Deputado', on_delete=models.PROTECT)
+    cargo = models.ForeignKey('Cargo', on_delete=models.PROTECT, blank=True, null=True)
+    logradouro = models.CharField(max_length=100)
+    numero = models.CharField(max_length=10, null=True, blank=True)
+    bairro = models.CharField(max_length=60)
+    complemento = models.CharField(max_length=60, null=True, blank=True)
+    cidade = models.ForeignKey('Cidade', on_delete=models.PROTECT)
+    telefone = models.CharField(max_length=30, blank=True, null=True)
+    whatsapp = models.CharField(max_length=30, blank=True, null=True)
+    email = models.EmailField()
 
 
 class Partido(models.Model):
@@ -37,26 +58,26 @@ class Cargo(models.Model):
 
 
 class Entidade(models.Model):
-    # TODO: especificações de gênero e tratamento
+    pronome = models.CharField(max_length=2, choices=[('À', 'À'), ('Ao', 'Ao')])
+    tratamento = models.CharField(max_length=60, null=True, blank=True)
     deputado = models.ForeignKey('Deputado', on_delete=models.PROTECT)
     nome = models.CharField(max_length=60)
     regional = models.ForeignKey('Regional', on_delete=models.PROTECT)
-    cidade = models.ForeignKey('Cidade', on_delete=models.PROTECT)
     cargo = models.ForeignKey('Cargo', on_delete=models.PROTECT, blank=True, null=True)
     partido = models.ForeignKey('Partido', on_delete=models.PROTECT, blank=True, null=True)
+    logradouro = models.CharField(max_length=100)
+    numero = models.CharField(max_length=10, null=True, blank=True)
+    bairro = models.CharField(max_length=60)
+    complemento = models.CharField(max_length=60, null=True, blank=True)
+    cidade = models.ForeignKey('Cidade', on_delete=models.PROTECT)
     inicio_mandato = models.DateField('Início do mandato', null=True, blank=True)
     fim_mandato = models.DateField('Fim do mandato', null=True, blank=True)
     ativo = models.BooleanField(default=True)
 
 
 class ContatoEntidade(models.Model):
-    # TODO: verificar se contatos tem que ser separados de endereços
     entidade = models.ForeignKey('Entidade', on_delete=models.PROTECT)
-    logradouro = models.CharField(max_length=100)
-    numero = models.CharField(max_length=10, null=True, blank=True)
-    bairro = models.CharField(max_length=60)
-    complemento = models.CharField(max_length=60, null=True, blank=True)
-    cidade = models.ForeignKey('Cidade', on_delete=models.PROTECT)
+    nome = models.CharField(max_length=60)
     telefone = models.CharField(max_length=30, blank=True, null=True)
     whatsapp = models.CharField(max_length=30, blank=True, null=True)
     email = models.EmailField()
@@ -64,36 +85,27 @@ class ContatoEntidade(models.Model):
 
 class Oficio(models.Model):
     deputado = models.ForeignKey('Deputado', on_delete=models.PROTECT)
-    data_emissao = models.DateField('Data de emissão')
-    numero = models.CharField(max_length=60)
+    cidade = models.ForeignKey('Cidade', on_delete=models.PROTECT)
+    data = models.DateField()
     regional = models.ForeignKey('Regional', on_delete=models.PROTECT)
     assunto = models.CharField(max_length=100)
     descricao = models.TextField('Descrição')
 
 
-# TODO: verificar situação dos roteiros, vôos e compromissos
-class Roteiros(models.Model):
-    id = models.IntegerField(db_column='ID', unique=True)
-    data_hora_inicial = models.DateTimeField(db_column='Data_Hora_Inicial')
-    data_hora_final = models.DateTimeField(db_column='Data_Hora_Final')
-    id_tipo = models.IntegerField(db_column='ID_Tipo')
-    local = models.CharField(db_column='Local', max_length=45, blank=True, null=True)
-    descricao = models.CharField(db_column='Descricao', max_length=255)
-    obs = models.CharField(db_column='Obs', max_length=255, blank=True, null=True)
-    id_deputado = models.IntegerField(db_column='ID_Deputado')
-
-
-class Tipos(models.Model):
-    id = models.IntegerField(db_column='ID', unique=True)
-    tipo = models.CharField(db_column='Tipo', max_length=45)
-    id_deputado = models.IntegerField(db_column='ID_Deputado')
+class TipoCompromisso(models.Model):
+    deputado = models.ForeignKey('Deputado', on_delete=models.PROTECT)
+    nome = models.CharField(max_length=60)
     ativo = models.BooleanField(default=True)
 
 
-class Viagem(models.Model):
-    id = models.IntegerField(db_column='ID', unique=True)
-    obs = models.CharField(db_column='Obs', max_length=255, blank=True, null=True)
-    id_deputado = models.IntegerField(db_column='ID_Deputado')
+class Compromisso(models.Model):
+    deputado = models.ForeignKey('Deputado', on_delete=models.PROTECT)
+    data_hora_inicio = models.DateTimeField()
+    data_hora_fim = models.DateTimeField()
+    tipo = models.ForeignKey('TipoCompromisso', on_delete=models.PROTECT)
+    local = models.CharField(max_length=60)
+    descricao = models.TextField('Descrição')
+    obs = models.TextField('Observações', blank=True, null=True)
 
 
 class Companhia(models.Model):
@@ -101,15 +113,15 @@ class Companhia(models.Model):
     ativa = models.BooleanField(default=True)
 
 
-class Voos(models.Model):
-    id = models.IntegerField(db_column='ID', unique=True)
-    id_viagem = models.IntegerField(db_column='ID_Viagem')
-    id_cidade_partida = models.IntegerField(db_column='ID_Cidade_Partida')
-    id_cidade_chegada = models.IntegerField(db_column='ID_Cidade_Chegada')
-    data_hora_partida = models.DateTimeField(db_column='Data_Hora_Partida')
-    data_hora_chegada = models.DateTimeField(db_column='Data_Hora_Chegada')
-    id_companhia = models.IntegerField(db_column='ID_Companhia')
-    localizador = models.CharField(db_column='Localizador', max_length=45)
-    numero_voo = models.IntegerField(db_column='Numero_Voo')
-    assento = models.IntegerField(db_column='Assento')
-    id_deputado = models.IntegerField(db_column='ID_Deputado')
+class Voo(models.Model):
+    deputado = models.ForeignKey('Deputado', on_delete=models.PROTECT)
+    cidade_partida = models.ForeignKey('Cidade', on_delete=models.PROTECT)
+    data_hora_partida = models.DateTimeField()
+    cidade_chegada = models.ForeignKey('Cidade', on_delete=models.PROTECT)
+    data_hora_chegada = models.DateTimeField()
+    companhia = models.ForeignKey('Companhia', on_delete=models.PROTECT)
+    localizador = models.CharField(max_length=60)
+    numero = models.PositiveIntegerField('Número do vôo')
+    portao = models.CharField('Portão de embarque', max_length=30)
+    assento = models.PositiveIntegerField('Número do assento')
+    obs = models.TextField('Observações', blank=True, null=True)
