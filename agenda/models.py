@@ -1,4 +1,5 @@
 from django.db import models
+from gabinete.models import DeputadoManager
 
 
 class TipoCompromisso(models.Model):
@@ -10,12 +11,14 @@ class TipoCompromisso(models.Model):
     nome = models.CharField(max_length=60)
     ativo = models.BooleanField(default=True)
 
+    objects = DeputadoManager()
+
     def __str__(self):
         return self.nome
 
     class Meta:
         verbose_name = 'Tipo de compromisso'
-        verbose_name_plural = 'Tipos de compromissos'
+        verbose_name_plural = 'Tipos de compromisso'
         ordering = ('nome',)
 
 
@@ -47,7 +50,9 @@ class Companhia(models.Model):
     Companhias aéreas
     """
     nome = models.CharField(max_length=60)
-    ativa = models.BooleanField(default=True)
+    ativo = models.BooleanField(default=True)
+
+    objects = DeputadoManager()
 
     def __str__(self):
         return self.nome
