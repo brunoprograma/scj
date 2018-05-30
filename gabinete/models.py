@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class DeputadoManager(models.Manager):
     def ativo(self, deputado=None, *args, **kwargs):
         if deputado and ('deputado' in self.model._meta.get_fields(include_hidden=True)):
@@ -11,6 +12,13 @@ class DeputadoManager(models.Manager):
 class Usuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     deputado = models.ForeignKey('Deputado', on_delete=models.PROTECT)
+
+    def __str__(self):
+        return '{}'.format(self.user)
+
+    class Meta:
+        verbose_name = 'Usuário'
+        verbose_name_plural = 'Usuários'
 
 
 class Pais(models.Model):
@@ -104,6 +112,7 @@ class Deputado(models.Model):
         verbose_name = 'Parlamentar'
         verbose_name_plural = 'Parlamentares'
         ordering = ('nome',)
+
 
 class EnderecoDeputado(models.Model):
     """

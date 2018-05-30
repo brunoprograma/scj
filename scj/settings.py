@@ -131,6 +131,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
 # django-crud-adminite configuration
 # http://django-cruds-adminlte.readthedocs.io/en/latest/installation.html
 

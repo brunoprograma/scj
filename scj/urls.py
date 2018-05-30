@@ -18,14 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('gabinete.urls')),
 ]
-
-# django-cruds-adminlte
-from cruds_adminlte.urls import crud_for_app
-urlpatterns += crud_for_app('agenda')
-
-from cruds_adminlte.urls import crud_for_app
-urlpatterns += crud_for_app('gabinete')
-
-from cruds_adminlte.urls import crud_for_app
-urlpatterns += crud_for_app('oficios')
