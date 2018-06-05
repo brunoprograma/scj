@@ -1,5 +1,6 @@
 import re
 from django import forms
+from .models import *
 
 
 class FormEnderecoDeputado(forms.ModelForm):
@@ -11,3 +12,7 @@ class FormEnderecoDeputado(forms.ModelForm):
             raise forms.ValidationError('Telefone inválido.')
 
         return data
+
+    class Meta:
+        model = EnderecoDeputado
+        exclude = ('deputado',)
