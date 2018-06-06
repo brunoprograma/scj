@@ -27,22 +27,22 @@ class Compromisso(models.Model):
     Define o compromisso com os dados do evento, isso será exibido no relatório de roteiros.
     """
     deputado = models.ForeignKey('gabinete.Deputado', on_delete=models.PROTECT)
-    data = models.DateField()
-    hora_inicio = models.TimeField('Horário de início', unique_for_date='data')
-    hora_fim = models.TimeField('Horário de término', unique_for_date='data')
+    data_hora_inicio = models.DateTimeField('Data e Hora de início')
+    data_hora_fim = models.DateTimeField('Data e Hora de término')
     tipo = models.ForeignKey('TipoCompromisso', on_delete=models.PROTECT,
                              help_text='Define o tipo de compromisso do parlamentar. Ex.: Reunião, Evento festivo, Etc.')
     local = models.CharField(max_length=60, help_text='Local do evento')
+    cidade = models.ForeignKey('gabinete.Cidade', on_delete=models.PROTECT)
     descricao = models.TextField('Descrição',
                                  help_text='Descrição geral do evento, para que o parlamentar saiba do que se trata.')
     obs = models.TextField('Observações', blank=True, null=True)
 
     def __str__(self):
-        '{} em {} das {}h às {}h'.format(self.tipo, self.local, self.hora_inicio.strftime('%H:%i'),
-                                         self.hora_fim.strftime('%H:%i'))
+        '{} em {} de {} à {}'.format(self.tipo, self.local, self.data_hora_inicio.strftime('%c'),
+                                         self.data_hora_fim.strftime('%c'))
 
     class Meta:
-        ordering = ('data', 'hora_inicio')
+        ordering = ('data_hora_inicio',)
 
 
 class Companhia(models.Model):
@@ -76,9 +76,9 @@ class Voo(models.Model):
     data_hora_chegada = models.DateTimeField('Data e horário de chegada')
     companhia = models.ForeignKey('Companhia', on_delete=models.PROTECT, verbose_name='Companhia aérea')
     localizador = models.CharField(max_length=60, help_text='Código localizador do vôo.')
-    numero = models.PositiveIntegerField('Número do vôo')
+    numero = models.CharField(max_length=20, help_text='Número do vôo')
     portao = models.CharField('Portão de embarque', max_length=30)
-    assento = models.PositiveIntegerField('Número do assento')
+    assento = models.CharField(max_length=20, help_text='Número do assento')
     obs = models.TextField('Observações', blank=True, null=True)
 
     def __str__(self):

@@ -1,9 +1,9 @@
 from django.urls import path, include
 from . import views
 
-deputado = views.Deputado_CRUD()
+deputado = views.DeputadoCRUD()
 
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
+    path('oficios', views.IndexView.as_view(), name='entidades'),
     path('', include(deputado.get_urls())),
 ]

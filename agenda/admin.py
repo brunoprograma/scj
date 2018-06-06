@@ -1,3 +1,8 @@
 from django.contrib import admin
+from .models import *
 
-# Register your models here.
+
+admin.site.register(TipoCompromisso)
+admin.site.register(Compromisso)
+admin.site.register(Companhia)
+admin.site.register(Voo)
