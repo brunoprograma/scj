@@ -1,6 +1,6 @@
-from django.views.generic import TemplateView
 from cruds_adminlte.crud import CRUDView
-from .models import TipoCompromisso, Compromisso, Companhia, Voo
+from .models import *
+
 
 class TipoCompromisso_CRUD(CRUDView):
     model = TipoCompromisso

@@ -1,7 +1,7 @@
-from django.views.generic import TemplateView
 from cruds_adminlte.crud import CRUDView
 from cruds_adminlte.inline_crud import InlineAjaxCRUD
 from .models import Cargo, Entidade, ContatoEntidade, Oficio
+from .forms import FormContatoEntidade, FormEntidade, FormOficio
 
 
 class Cargo_CRUD(CRUDView):

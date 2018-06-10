@@ -86,10 +86,10 @@ class Voo(models.Model):
                                                                                       self.companhia,
                                                                                       self.cidade_partida,
                                                                                       self.data_hora_partida
-                                                                                      .strftime('%D %d/%m/%Y %H:%i'),
+                                                                                      .strftime("%A, %d. %B %Y %I:%M%p"),
                                                                                       self.cidade_chegada,
                                                                                       self.data_hora_chegada
-                                                                                      .strftime('%D %d/%m/%Y %H:%i'))
+                                                                                      .strftime("%A, %d. %B %Y %I:%M%p"))
 
     class Meta:
         verbose_name = 'Vôo'
