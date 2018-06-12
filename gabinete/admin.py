@@ -24,18 +24,22 @@ class DeputadoAdmin(admin.ModelAdmin):
 
 class PaisAdmin(admin.ModelAdmin):
     list_display = ('nome',)
+    search_fields = ('nome',)
 
 
 class EstadoAdmin(admin.ModelAdmin):
     list_display = ('nome', 'sigla')
+    search_fields = ('nome', 'sigla')
 
 
 class CidadeAdmin(admin.ModelAdmin):
     list_display = ('nome', 'estado')
+    search_fields = ('nome',)
 
 
 class RegionalAdmin(admin.ModelAdmin):
     list_display = ('nome', )
+    search_fields = ('nome',)
 
 admin.site.register(Usuario, UsuarioAdmin)
 admin.site.register(Deputado, DeputadoAdmin)
