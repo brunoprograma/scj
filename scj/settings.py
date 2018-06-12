@@ -38,13 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'crispy_forms',
-    'django_select2',
-    'easy_thumbnails',
-    'image_cropping',
-    'django_ajax',
-    'cruds_adminlte',
-
     'gabinete.apps.GabineteConfig',
     'agenda.apps.AgendaConfig',
     'oficios.apps.OficiosConfig',
