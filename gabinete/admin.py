@@ -9,17 +9,38 @@ class UsuarioAdmin(admin.ModelAdmin):
     list_filter = ('deputado',)
 
 
+class EnderecoDeputadoAdmin(admin.StackedInline):
+    list_display = ('telefone', 'celular', 'email')
+    form = FormEnderecoDeputado
+    model = EnderecoDeputado
+
+
 class DeputadoAdmin(admin.ModelAdmin):
     list_display = ('nome', 'partido', 'estado')  #Deputado.objects.filter()
     list_filter = ('partido', 'estado')
     search_fields = ('nome', )
-    form = FormEnderecoDeputado
+    inlines = [EnderecoDeputadoAdmin, ]
 
+
+class PaisAdmin(admin.ModelAdmin):
+    list_display = ('nome',)
+
+
+class EstadoAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'sigla')
+
+
+class CidadeAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'estado')
+
+
+class RegionalAdmin(admin.ModelAdmin):
+    list_display = ('nome', )
 
 admin.site.register(Usuario, UsuarioAdmin)
 admin.site.register(Deputado, DeputadoAdmin)
-admin.site.register(Pais)
-admin.site.register(Estado)
-admin.site.register(Cidade)
-admin.site.register(Partido)
-admin.site.register(Regional)
+admin.site.register(Pais, PaisAdmin)
+admin.site.register(Estado, EstadoAdmin)
+admin.site.register(Cidade, CidadeAdmin)
+admin.site.register(Partido, PaisAdmin)
+admin.site.register(Regional, RegionalAdmin)

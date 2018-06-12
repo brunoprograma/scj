@@ -59,7 +59,7 @@ class ContatoEntidade(models.Model):
     nome = models.CharField(max_length=60)
     telefone = models.CharField(max_length=30, blank=True, null=True)
     fax = models.CharField(max_length=30, blank=True, null=True)
-    whatsapp = models.CharField(max_length=30, blank=True, null=True)
+    celular = models.CharField(max_length=30, blank=True, null=True)
     email = models.EmailField()
 
     def __str__(self):
@@ -71,7 +71,7 @@ class ContatoEntidade(models.Model):
         ordering = ('nome',)
 
 
-class Oficio(models.Model):
+class Oficio(models.Model): #O numero vai ser o ID concatenado com o GDVC
     deputado = models.ForeignKey('gabinete.Deputado', on_delete=models.PROTECT)
     data = models.DateField()
     regional = models.ForeignKey('gabinete.Regional', on_delete=models.PROTECT)

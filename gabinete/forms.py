@@ -21,11 +21,11 @@ class FormEnderecoDeputado(forms.ModelForm):
 
         return data
 
-    def clean_whatsapp(self):
-        data = re.sub('\D', '', self.cleaned_data.get('whatsapp', ''))
+    def clean_celular(self):
+        data = re.sub('\D', '', self.cleaned_data.get('celular', ''))
 
         if len(data) not in (0, 10, 11):
-            raise forms.ValidationError('Whatsapp inválido!')
+            raise forms.ValidationError('Celular inválido!')
 
         return data
 
@@ -33,7 +33,7 @@ class FormEnderecoDeputado(forms.ModelForm):
         cleaned_data = self.cleaned_data
         telefone = re.sub('\D','', self.cleaned_data.get('telefone',''))
         fax = re.sub('\D', '', self.cleaned_data.get('fax',''))
-        whatsapp = re.sub('\D', '', self.cleaned_data.get('whatsapp',''))
+        whatsapp = re.sub('\D', '', self.cleaned_data.get('celular',''))
 
         if telefone == fax or telefone == whatsapp or fax == whatsapp :
             raise forms.ValidationError('Telefones não devem ser iguais!')
