@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rangefilter',
+
     'gabinete.apps.GabineteConfig',
     'agenda.apps.AgendaConfig',
     'oficios.apps.OficiosConfig',
@@ -129,24 +131,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-
-# django-crud-adminite configuration
-# http://django-cruds-adminlte.readthedocs.io/en/latest/installation.html
-
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
-IMAGE_CROPPING_JQUERY_URL = None
-
-INTERNAL_IPS = ('127.0.0.1',)
-
-from easy_thumbnails.conf import Settings as thumbnail_settings
-THUMBNAIL_PROCESSORS = (
-    'image_cropping.thumbnail_processors.crop_corners',
-) + thumbnail_settings.THUMBNAIL_PROCESSORS
-
-TIME_FORMAT= 'h:i A'
-DATETIME_FORMAT='m/d/Y H:i:s'
-DATE_FORMAT="m/d/Y"
-TIME_INPUT_FORMATS = ['%I:%M %p']
 
 # Locale configuration
 LOCALE_PATHS = (

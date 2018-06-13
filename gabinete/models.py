@@ -54,7 +54,7 @@ class Estado(models.Model):
         ordering = ('sigla',)
 
 
-class Cidade(models.Model):
+class Cidade(models.Model): #Para carregar as cidades no terminal loaddata initial
     nome = models.CharField(max_length=60)
     estado = models.ForeignKey('Estado', on_delete=models.PROTECT)
 
@@ -126,7 +126,7 @@ class EnderecoDeputado(models.Model):
     cidade = models.ForeignKey('Cidade', on_delete=models.PROTECT)
     telefone = models.CharField(max_length=30)
     fax = models.CharField(max_length=30, blank=True, null=True)
-    whatsapp = models.CharField(max_length=30, blank=True, null=True)
+    celular = models.CharField(max_length=30, blank=True, null=True)
     email = models.EmailField()
 
     def __str__(self):

@@ -38,8 +38,8 @@ class Compromisso(models.Model):
     obs = models.TextField('Observações', blank=True, null=True)
 
     def __str__(self):
-        '{} em {} de {} à {}'.format(self.tipo, self.local, self.data_hora_inicio.strftime('%c'),
-                                         self.data_hora_fim.strftime('%c'))
+        return '{} em {} de {} à {}'.format(self.tipo, self.local, self.data_hora_inicio.strftime('%c'),
+                                            self.data_hora_fim.strftime('%c'))
 
     class Meta:
         ordering = ('data_hora_inicio',)

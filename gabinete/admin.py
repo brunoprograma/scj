@@ -1,34 +1,50 @@
 from django.contrib import admin
+from agenda.admin import MyModelAdmin
 from .models import *
 from .forms import *
 
 
-class MyModelAdmin(admin.ModelAdmin):
-    def get_queryset(self, request):
-        queryset = super(MyModelAdmin, self).get_queryset(request)
-        if not request.user.is_superuser and ('deputado' in self.model._meta.get_fields(include_hidden=True)):
-            return queryset.filter(deputado=request.user.usuario.deputado)
-
-
 @admin.register(Usuario)
-class UsuarioAdmin(admin.ModelAdmin):
+class UsuarioAdmin(MyModelAdmin):
     raw_id_fields = ('user',)
     list_display = ('user', 'deputado')
     list_filter = ('deputado',)
 
 
+class EnderecoDeputado_Inline(admin.StackedInline):
+    list_display = ('telefone', 'celular', 'email')
+    form = FormEnderecoDeputado
+    model = EnderecoDeputado
+
+
 @admin.register(Deputado)
-class DeputadoAdmin(MyModelAdmin):
+class DeputadoAdmin(admin.ModelAdmin):
     list_display = ('nome', 'partido', 'estado')
     list_filter = ('partido', 'estado')
     search_fields = ('nome', )
-    form = FormEnderecoDeputado
+    inlines = [EnderecoDeputado_Inline, ]
 
 
-# admin.site.register(Usuario, UsuarioAdmin)
-# admin.site.register(Deputado, DeputadoAdmin)
-# admin.site.register(Pais)
-# admin.site.register(Estado)
-# admin.site.register(Cidade)
-# admin.site.register(Partido)
-# admin.site.register(Regional)
+@admin.register(Pais)
+class PaisAdmin(admin.ModelAdmin):
+    list_display = ('nome',)
+    search_fields = ('nome',)
+
+
+@admin.register(Estado)
+class EstadoAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'sigla')
+    search_fields = ('nome', 'sigla')
+
+
+@admin.register(Cidade)
+class CidadeAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'estado')
+    search_fields = ('nome',)
+
+
+@admin.register(Regional)
+class RegionalAdmin(admin.ModelAdmin):
+    list_display = ('nome', )
+    search_fields = ('nome',)
+
