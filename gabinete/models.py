@@ -114,6 +114,12 @@ class Deputado(models.Model):
     def __str__(self):
         return '{} ({}-{})'.format(self.nome, self.partido, self.estado)
 
+    @property
+    def endereco_principal(self):
+        if self.enderecodeputado_set.filter(principal=True).exists():
+            return self.enderecodeputado_set.get(principal=True)
+        return self.enderecodeputado_set.first() if self.enderecodeputado_set.all().exists() else None
+
     class Meta:
         verbose_name = 'Parlamentar'
         verbose_name_plural = 'Parlamentares'
