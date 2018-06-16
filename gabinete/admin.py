@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import User, UserAdmin
 from agenda.admin import MyModelAdmin
 from .models import *
 from .forms import *
@@ -84,3 +85,21 @@ class RegionalAdmin(admin.ModelAdmin):
     list_display = ('nome', )
     search_fields = ('nome',)
     form = FormRegional
+
+
+admin.site.unregister(User)
+
+
+@admin.register(User)
+class MyUserAdmin(UserAdmin):
+
+    def is_customer(self, user):
+        usuario = getattr(user, 'usuario', None)
+        return (not user.is_superuser) and usuario
+
+    def has_change_permission(self, request, obj=None):
+        perm = super(MyUserAdmin, self).has_change_permission(request, obj)
+        if obj and self.is_customer(request.user):
+            return False
+
+        return perm

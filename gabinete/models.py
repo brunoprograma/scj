@@ -10,9 +10,10 @@ class DeputadoManager(models.Manager):
 
 
 class Usuario(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Usuário')
     deputado = models.ForeignKey('Deputado', on_delete=models.PROTECT)
     supervisor = models.BooleanField(default=False)
+    ativo = models.BooleanField(default=True)
 
     def __str__(self):
         return '{}'.format(self.user)
@@ -21,10 +22,18 @@ class Usuario(models.Model):
     def save(self, *args, **kwargs):
         super(Usuario, self).save(*args, **kwargs)
         self.user.groups.clear()
-        groups = Group.objects.filter(id=1)
+        self.user.is_active = self.ativo
+        self.user.is_staff = self.ativo
+        self.user.save()
 
-        if self.supervisor and groups.exists():
-            self.user.groups.add(groups[0])
+        if self.ativo:
+            if self.supervisor:
+                groups = Group.objects.filter(id=1)  # grupo supervisores
+            else:
+                groups = Group.objects.filter(id=2)  # grupo acessores
+
+            if groups.exists():
+                self.user.groups.add(groups[0])
 
     class Meta:
         verbose_name = 'Acessor'
