@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 from django.contrib.auth.models import User
 
 
@@ -12,9 +12,13 @@ class DeputadoManager(models.Manager):
 class Usuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     deputado = models.ForeignKey('Deputado', on_delete=models.PROTECT)
+    supervisor = models.BooleanField(default=False)
 
     def __str__(self):
         return '{}'.format(self.user)
+
+    def save(self, *args, **kwargs):
+        super(Usuario, self).save(*args **kwargs)
 
     class Meta:
         verbose_name = 'Acessor'
@@ -110,6 +114,12 @@ class Deputado(models.Model):
     def __str__(self):
         return '{} ({}-{})'.format(self.nome, self.partido, self.estado)
 
+    @property
+    def endereco_principal(self):
+        if self.enderecodeputado_set.filter(principal=True).exists():
+            return self.enderecodeputado_set.get(principal=True)
+        return self.enderecodeputado_set.first() if self.enderecodeputado_set.all().exists() else None
+
     class Meta:
         verbose_name = 'Parlamentar'
         verbose_name_plural = 'Parlamentares'
@@ -130,6 +140,7 @@ class EnderecoDeputado(models.Model):
     fax = models.CharField(max_length=30, blank=True, null=True)
     celular = models.CharField(max_length=30, blank=True, null=True)
     email = models.EmailField()
+    principal = models.BooleanField(default=False)
 
     def __str__(self):
         return '{}{} - {}{} {}'.format(self.logradouro,
@@ -137,6 +148,12 @@ class EnderecoDeputado(models.Model):
                                        self.bairro,
                                        ' {}'.format(self.complemento) if self.complemento else '',
                                        self.cidade)
+
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        super(EnderecoDeputado, self).save(*args, **kwargs)
+        if self.principal:
+            EnderecoDeputado.objects.exclude(id=self.pk).update(principal=False)
 
     class Meta:
         verbose_name = 'Endereço do parlamentar'
