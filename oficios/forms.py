@@ -1,5 +1,6 @@
 import re
 from datetime import datetime
+from ajax_select.fields import AutoCompleteSelectField
 from django import forms
 from agenda.forms import MyModelForm
 from .models import *
@@ -16,6 +17,8 @@ class FormEntidade(MyModelForm):
     class Meta:
         model = Entidade
         exclude = []
+
+    regional = AutoCompleteSelectField('regionais', help_text=None)
 
 
 class FormContatoEntidade(forms.ModelForm):

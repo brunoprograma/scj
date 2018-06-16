@@ -18,4 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', admin.site.urls),
+    path('ajax_select/', include('ajax_select.urls')),
 ]

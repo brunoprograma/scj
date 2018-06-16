@@ -1,4 +1,5 @@
 from rangefilter.filter import DateRangeFilter
+from ajax_select.admin import AjaxSelectAdmin
 from django.contrib import admin
 from django.db import transaction
 from agenda.admin import MyModelAdmin
@@ -20,7 +21,7 @@ class ContatoEntidadeAdmin_Inline(admin.StackedInline):
 
 
 @admin.register(Entidade)
-class EntidadeAdmin(MyModelAdmin):
+class EntidadeAdmin(MyModelAdmin, AjaxSelectAdmin):
     list_display = ('nome', 'regional', 'cargo', 'cidade')
     form = FormEntidade
     inlines = [ContatoEntidadeAdmin_Inline]
