@@ -87,3 +87,17 @@ class Oficio(models.Model): #O numero vai ser o ID concatenado com o GDVC
         verbose_name = 'Ofício'
         verbose_name_plural = 'Ofícios'
         ordering = ('-data', 'assunto')
+
+
+class EnvioOficio(models.Model):
+    oficio = models.ForeignKey('Oficio', verbose_name='Ofício', on_delete=models.CASCADE)
+    enviado = models.BooleanField(default=False)
+    erros = models.TextField(null=True, blank=True)
+    data_hora_envio = models.DateTimeField('Data e hora de envio')
+
+    def __str__(self):
+        return 'Envio do Ofício {}'.format(self.oficio)
+
+    class Meta:
+        verbose_name = 'Envio do Ofício'
+        verbose_name_plural = 'Envios dos Ofícios'
