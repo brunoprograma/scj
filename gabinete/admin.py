@@ -4,6 +4,13 @@ from .models import *
 from .forms import *
 
 
+@admin.register(Partido)
+class PartidoAdmin(admin.ModelAdmin):
+    list_display = ('sigla', 'nome', 'ativo')
+    list_filter = ('ativo',)
+    search_fields = ('sigla', 'nome')
+
+
 @admin.register(Usuario)
 class UsuarioAdmin(MyModelAdmin):
     raw_id_fields = ('user',)
@@ -47,4 +54,3 @@ class CidadeAdmin(admin.ModelAdmin):
 class RegionalAdmin(admin.ModelAdmin):
     list_display = ('nome', )
     search_fields = ('nome',)
-
