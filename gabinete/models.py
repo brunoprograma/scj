@@ -1,5 +1,5 @@
 from django.db import models, transaction
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 
 class DeputadoManager(models.Manager):
@@ -17,8 +17,14 @@ class Usuario(models.Model):
     def __str__(self):
         return '{}'.format(self.user)
 
+    @transaction.atomic
     def save(self, *args, **kwargs):
-        super(Usuario, self).save(*args **kwargs)
+        super(Usuario, self).save(*args, **kwargs)
+        self.user.groups.clear()
+        groups = Group.objects.filter(id=1)
+
+        if self.supervisor and groups.exists():
+            self.user.groups.add(groups[0])
 
     class Meta:
         verbose_name = 'Acessor'

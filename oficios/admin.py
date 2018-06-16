@@ -36,7 +36,7 @@ class EnvioOficioAdmin_Inline(admin.StackedInline):
 
     def has_delete_permission(self, request, obj=None):
         perm = super(EnvioOficioAdmin_Inline, self).has_delete_permission(request, obj)
-        if not obj.enviado:
+        if obj and not obj.enviado:
             return perm
         return False
 
