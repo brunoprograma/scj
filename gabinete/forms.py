@@ -1,6 +1,21 @@
 import re
 from django import forms
-from .models import EnderecoDeputado
+from agenda.forms import MyModelForm
+from .models import *
+
+
+class FormUsuario(MyModelForm):
+
+    class Meta:
+        model = Usuario
+        exclude = []
+
+
+class FormRegional(MyModelForm):
+
+    class Meta:
+        model = Regional
+        exclude = []
 
 
 class FormEnderecoDeputado(forms.ModelForm):

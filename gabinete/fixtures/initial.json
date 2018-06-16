@@ -44760,5 +44760,338 @@
         "nome": "Xambio\u00e1",
         "estado": 27
     }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 1,
+    "fields": {
+        "nome": "MOVIMENTO DEMOCR\u00c1TICO BRASILEIRO",
+        "sigla": "MDB",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 2,
+    "fields": {
+        "nome": "PARTIDO TRABALHISTA BRASILEIRO",
+        "sigla": "PTB",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 3,
+    "fields": {
+        "nome": "PARTIDO DEMOCR\u00c1TICO TRABALHISTA",
+        "sigla": "PDT",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 4,
+    "fields": {
+        "nome": "PARTIDO DOS TRABALHADORES",
+        "sigla": "PT",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 5,
+    "fields": {
+        "nome": "DEMOCRATAS",
+        "sigla": "DEM",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 6,
+    "fields": {
+        "nome": "PARTIDO COMUNISTA DO BRASIL",
+        "sigla": "PCdoB",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 7,
+    "fields": {
+        "nome": "PARTIDO SOCIALISTA BRASILEIRO",
+        "sigla": "PSB",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 8,
+    "fields": {
+        "nome": "PARTIDO DA SOCIAL DEMOCRACIA BRASILEIRA",
+        "sigla": "PSDB",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 9,
+    "fields": {
+        "nome": "PARTIDO TRABALHISTA CRIST\u00c3O",
+        "sigla": "PTC",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 10,
+    "fields": {
+        "nome": "PARTIDO SOCIAL CRIST\u00c3O",
+        "sigla": "PSC",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 11,
+    "fields": {
+        "nome": "PARTIDO DA MOBILIZA\u00c7\u00c3O NACIONAL",
+        "sigla": "PMN",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 12,
+    "fields": {
+        "nome": "PARTIDO REPUBLICANO PROGRESSISTA",
+        "sigla": "PRP",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 13,
+    "fields": {
+        "nome": "PARTIDO POPULAR SOCIALISTA",
+        "sigla": "PPS",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 14,
+    "fields": {
+        "nome": "PARTIDO VERDE",
+        "sigla": "PV",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 15,
+    "fields": {
+        "nome": "AVANTE",
+        "sigla": "AVANTE",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 16,
+    "fields": {
+        "nome": "PARTIDO PROGRESSISTA",
+        "sigla": "PP",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 17,
+    "fields": {
+        "nome": "PARTIDO SOCIALISTA DOS TRABALHADORES UNIFICADO",
+        "sigla": "PSTU",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 18,
+    "fields": {
+        "nome": "PARTIDO COMUNISTA BRASILEIRO",
+        "sigla": "PCB",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 19,
+    "fields": {
+        "nome": "PARTIDO RENOVADOR TRABALHISTA BRASILEIRO",
+        "sigla": "PRTB",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 20,
+    "fields": {
+        "nome": "PARTIDO HUMANISTA DA SOLIDARIEDADE",
+        "sigla": "PHS",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 21,
+    "fields": {
+        "nome": "DEMOCRACIA CRIST\u00c3",
+        "sigla": "DC",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 22,
+    "fields": {
+        "nome": "PARTIDO DA CAUSA OPER\u00c1RIA",
+        "sigla": "PCO",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 23,
+    "fields": {
+        "nome": "PODEMOS",
+        "sigla": "PODE",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 24,
+    "fields": {
+        "nome": "PARTIDO SOCIAL LIBERAL",
+        "sigla": "PSL",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 25,
+    "fields": {
+        "nome": "PARTIDO REPUBLICANO BRASILEIRO",
+        "sigla": "PRB",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 26,
+    "fields": {
+        "nome": "PARTIDO SOCIALISMO E LIBERDADE",
+        "sigla": "PSOL",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 27,
+    "fields": {
+        "nome": "PARTIDO DA REP\u00daBLICA",
+        "sigla": "PR",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 28,
+    "fields": {
+        "nome": "PARTIDO SOCIAL DEMOCR\u00c1TICO",
+        "sigla": "PSD",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 29,
+    "fields": {
+        "nome": "PARTIDO P\u00c1TRIA LIVRE",
+        "sigla": "PPL",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 30,
+    "fields": {
+        "nome": "PATRIOTA",
+        "sigla": "PATRI",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 31,
+    "fields": {
+        "nome": "PARTIDO REPUBLICANO DA ORDEM SOCIAL",
+        "sigla": "PROS",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 32,
+    "fields": {
+        "nome": "SOLIDARIEDADE",
+        "sigla": "SD",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 33,
+    "fields": {
+        "nome": "PARTIDO NOVO",
+        "sigla": "NOVO",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 34,
+    "fields": {
+        "nome": "REDE SUSTENTABILIDADE",
+        "sigla": "REDE",
+        "ativo": true
+    }
+},
+{
+    "model": "gabinete.partido",
+    "pk": 35,
+    "fields": {
+        "nome": "PARTIDO DA MULHER BRASILEIRA",
+        "sigla": "PMB",
+        "ativo": true
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$L9PZOWdySZRD$imJBrriN1cWqZ++1ld48e8urQy5YoWQidxiSrKVmFfU=",
+        "last_login": "2018-06-16T03:13:46.654Z",
+        "is_superuser": true,
+        "username": "scj",
+        "first_name": "",
+        "last_name": "",
+        "email": "geffersonvivan@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2018-06-16T03:12:40.193Z",
+        "groups": [],
+        "user_permissions": []
+    }
 }
 ]

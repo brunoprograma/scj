@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rangefilter',
+    'django_crontab',
 
     'gabinete.apps.GabineteConfig',
     'agenda.apps.AgendaConfig',
@@ -136,3 +137,21 @@ STATICFILES_DIRS = [
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, "locale"),
 )
+
+# django-crontab configuration
+# See: https://github.com/kraiz/django-crontab/blob/master/README.rst
+#
+# run this command to add all defined jobs from CRONJOBS to crontab (of the user which you are running this command with):
+# python manage.py crontab add
+#
+# show current active jobs of this project:
+# python manage.py crontab show
+#
+# removing all defined jobs is straightforward:
+# python manage.py crontab remove
+
+CRONJOBS = [
+    ('*/1 * * * *', 'oficios.cron.envia_oficios')
+]
+
+CRONTAB_LOCK_JOBS = True
