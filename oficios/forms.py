@@ -1,6 +1,6 @@
 import re
-from datetime import datetime
 from django import forms
+from django.utils import timezone
 from agenda.forms import MyModelForm
 from .models import *
 
@@ -54,8 +54,8 @@ class FormOficio(MyModelForm):
     def clean_data(self):
         data = self.cleaned_data.get('data', '')
 
-        if datetime.now().today() > data:
-            raise forms.ValidationError('O oficio não pode ser anterior a data atual!')
+        if data < timezone.now().date():
+            raise forms.ValidationError('O ofício não pode ser anterior a data atual!')
 
         return data
 

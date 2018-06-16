@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oficio</title>
+
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm;
+
+            @frame cabecalho{
+                -pdf-frame-content: header_content;
+            }
+
+            @frame rodape{
+                -pdf-frame-content: footer_content;
+            }
+        }
+
+        h1{
+            font-size: 18px;
+            color: #BBBBBB;
+            margin: 0px;
+        }
+
+        h2{
+            font-size: 14px;
+            color: #BBBBBB;
+            margin: 0px;
+            padding-top: -5px;
+        }
+
+        p{
+            margin: 0px;
+        }
+
+        #cabecalho img{
+            width: 80px;
+            height: 80px;
+            float: left;
+            margin-right: 10px;
+        }
+
+        .cabecalho_text{
+            margin-left: 90px;
+            padding-top: -55px;
+        }
+
+        .assinatura p{
+            margin: 0px;
+            text-align: center;
+        }
+
+
+        #rodape p{
+            color: #BBBBBB;
+            margin: 0px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="cabecalho">
+        <img src="{% static 'brasao.png' %}">
+    </div>
+    <div class="cabecalho_text">
+        <h1>CÂMARA DOS DEPUTADOS</h1>
+        <h2>Gabinete do Deputado Federal {{ oficio.deputado.nome }} {{ oficio.deputado.partido }}/{{ oficio.deputado.estado }}</h2>
+    </div>
+
+    <div>
+        <table border="0" style="margin-top: 20px">
+            <tr>
+                <td>Ofício N° {{ oficio.id }}/{{ oficio.data.year }} - {{ oficio.deputado.abreviatura_oficio }}</td>
+                <td style="text-align: right;">Brasília, {{ oficio.data }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="padding-top: 20px">
+        <p>À Sua Excelência {{ oficio.deputado.tratamento }}</p>
+        <p><b>{{ entidade.nome }}</b></p>
+        <p>{{ entidade.cargo }}</p>
+    </div>
+
+    <div style="padding-top: 50px">
+        <p><b>Assunto: </b> {{ oficio.assunto }}</p>
+    </div>
+
+    <div class="corpo">
+        <p>{{ oficio.descricao }}</p>
+    </div>
+
+    <div class="assinatura">
+        <p><b>{{ oficio.deputado.tratamento }}{{ oficio.deputado.nome }}</b></p>
+        <p>Deputado Federal ({{ oficio.deputado.partido }})</p>
+        <p>{{ oficio.deputado.mensagem }}</p>
+    </div>
+
+    <div id="rodape">
+        <p>Brasília – DF | Câmara dos Deputados - {{ endereco.complemento }} - {{ endereco.gabinete }} - {{ endereco.cep }}</p>
+        <p>Tel.: {{ endereco.telefone }} - {{ endereco.fax }} E-mail: {{ endereco.email }}</p>
+    </div>
+</body>
+</html>
