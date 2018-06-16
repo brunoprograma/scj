@@ -1,10 +1,11 @@
 import re
 from datetime import datetime
 from django import forms
-from .models import Entidade, ContatoEntidade, Oficio
+from agenda.forms import MyModelForm
+from .models import *
 
 
-class FormEntidade(forms.ModelForm):
+class FormEntidade(MyModelForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -48,7 +49,7 @@ class FormContatoEntidade(forms.ModelForm):
         exclude = []
 
 
-class FormOficio(forms.ModelForm):
+class FormOficio(MyModelForm):
 
     def clean_data(self):
         data = self.cleaned_data.get('data', '')
@@ -60,4 +61,11 @@ class FormOficio(forms.ModelForm):
 
     class Meta:
         model = Oficio
+        exclude = []
+
+
+class FormCargo(MyModelForm):
+
+    class Meta:
+        model = Cargo
         exclude = []

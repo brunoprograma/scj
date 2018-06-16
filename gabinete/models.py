@@ -17,8 +17,8 @@ class Usuario(models.Model):
         return '{}'.format(self.user)
 
     class Meta:
-        verbose_name = 'Usuário'
-        verbose_name_plural = 'Usuários'
+        verbose_name = 'Acessor'
+        verbose_name_plural = 'Acessores'
 
 
 class Pais(models.Model):
@@ -54,7 +54,7 @@ class Estado(models.Model):
         ordering = ('sigla',)
 
 
-class Cidade(models.Model): #Para carregar as cidades no terminal loaddata initial
+class Cidade(models.Model):
     nome = models.CharField(max_length=60)
     estado = models.ForeignKey('Estado', on_delete=models.PROTECT)
 
@@ -97,6 +97,8 @@ class Deputado(models.Model):
     tratamento = models.CharField('Pronome de tratamento', max_length=60, blank=True, null=True,
                                   help_text='Ex.: Dr., Sr., etc.')
     nome = models.CharField(max_length=60)
+    abreviatura_oficio = models.CharField('Abreviatura do Ofício', max_length=10,
+                                          help_text='Abreviatura de identificação inserida em todos os Ofícios.')
     partido = models.ForeignKey('Partido', on_delete=models.PROTECT)
     estado = models.ForeignKey('Estado', on_delete=models.PROTECT, verbose_name='Estado de atuação')
     mensagem = models.CharField('Mensagem de assinatura', max_length=60, null=True, blank=True,

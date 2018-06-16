@@ -1,14 +1,16 @@
 from rangefilter.filter import DateRangeFilter
 from django.contrib import admin
 from django.db import transaction
+from agenda.admin import MyModelAdmin
 from .models import *
 from .forms import *
 
 
 @admin.register(Cargo)
-class CargoAdmin(admin.ModelAdmin):
+class CargoAdmin(MyModelAdmin):
     list_display = ('nome',)
     search_fields = ('nome', )
+    form = FormCargo
 
 
 class ContatoEntidadeAdmin_Inline(admin.StackedInline):
@@ -18,7 +20,7 @@ class ContatoEntidadeAdmin_Inline(admin.StackedInline):
 
 
 @admin.register(Entidade)
-class EntidadeAdmin(admin.ModelAdmin):
+class EntidadeAdmin(MyModelAdmin):
     list_display = ('nome', 'regional', 'cargo', 'cidade')
     form = FormEntidade
     inlines = [ContatoEntidadeAdmin_Inline]
@@ -40,7 +42,7 @@ class EnvioOficioAdmin_Inline(admin.StackedInline):
 
 
 @admin.register(Oficio)
-class OficioAdmin(admin.ModelAdmin):
+class OficioAdmin(MyModelAdmin):
     list_display = ('id', 'data', 'regional', 'assunto')
     form = FormOficio
     search_fields = ('id', 'assunto')

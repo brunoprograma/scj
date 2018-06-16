@@ -71,7 +71,7 @@ class ContatoEntidade(models.Model):
         ordering = ('nome',)
 
 
-class Oficio(models.Model): #O numero vai ser o ID concatenado com o GDVC
+class Oficio(models.Model):
     deputado = models.ForeignKey('gabinete.Deputado', on_delete=models.PROTECT)
     data = models.DateField()
     regional = models.ForeignKey('gabinete.Regional', on_delete=models.PROTECT)
