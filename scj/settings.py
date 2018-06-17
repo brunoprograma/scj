@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'rangefilter',
     'django_crontab',
+    'ajax_select',
 
     'gabinete.apps.GabineteConfig',
     'agenda.apps.AgendaConfig',
