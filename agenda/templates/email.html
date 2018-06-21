@@ -8,7 +8,7 @@
     <p>{{ deputado }}</p>
     <p>{{ inicio|date:'c' }} - {{ fim|date:'c' }}</p>
     {% for item in itens %}
-        {% if item.data_hora_inicio %}
+        {% if item.data_hora_inicio %} {# evento #}
             <p>{{ item.data_hora_inicio|date:'c' }}</p>
             <p>{{ item.data_hora_fim|date:'c' }}</p>
             <p>{{ item.tipo }}</p>
@@ -16,7 +16,7 @@
             <p>{{ item.cidade }}</p>
             <p>{{ item.descricao }}</p>
             {% if item.obs %}<p>{{ item.obs }}</p>{% endif %}
-        {% else %}
+        {% else %} {# vôo #}
             <p>{{ item.cidade_partida }}</p>
             <p>{{ item.data_hora_partida|date:'c' }}</p>
             <p>{{ item.cidade_chegada }}</p>

@@ -2,7 +2,7 @@ import logging
 from itertools import chain
 from operator import attrgetter
 from django.utils import timezone
-from django.core.mail import send_mail
+from django.core.mail import send_mass_mail
 from django.template.loader import render_to_string
 from datetime import datetime, timedelta
 from gabinete.models import Deputado, Usuario
@@ -24,6 +24,8 @@ def envia_agenda_semana():
     proxima_segunda_data_hora = datetime(proxima_segunda.year,
                                          proxima_segunda.month,
                                          proxima_segunda.day, 0, 0, 0, 0) - timedelta(microseconds=1.0)
+
+    mensagens = []
 
     for deputado in Deputado.objects.ativo():
         contato_deputado = deputado.endereco_principal
@@ -53,9 +55,12 @@ def envia_agenda_semana():
                 if acessor.user.email:
                     emails_destino.append(acessor.user.email)
 
-            try:
-                send_mail(assunto_email, corpo_email, contato_deputado.email, emails_destino)
-            except Exception as e:
-                log.exception('Erro ao enviar e-mail para Deputado {}: {}', deputado, e)
+            mensagens.append((assunto_email, corpo_email, contato_deputado.email, emails_destino))
         else:
             log.error('Deputado {} não possui e-mail cadastrado.', deputado)
+
+    if mensagens:
+        try:
+            send_mass_mail(mensagens)
+        except Exception as e:
+            log.exception('Erro ao enviar e-mails da agenda: {}', e)

@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 
+
 def link_callback(uri, rel):
     """
     Convert HTML URIs to absolute system paths so xhtml2pdf can access those
@@ -31,8 +32,24 @@ def link_callback(uri, rel):
             )
     return path
 
-class Render:
 
+def oficio_html_to_pdf(path, params):
+    """
+    Renderiza o template do ofício e retona o conteúdo em PDF
+    :param path: str: nome do template
+    :param params: dict: dicionário do contexto
+    :return: arquivo PDF
+    """
+    template = get_template(path)
+    html = template.render(params)
+    response = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), response, link_callback=link_callback)
+    if not pdf.err:
+        return response.getvalue()
+    return None
+
+
+class Render:
     @staticmethod
     def render(path: str, params: dict):
         template = get_template(path)
