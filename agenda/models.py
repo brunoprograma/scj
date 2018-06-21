@@ -41,6 +41,10 @@ class Compromisso(models.Model):
         return '{} em {} de {} à {}'.format(self.tipo, self.local, self.data_hora_inicio.strftime('%c'),
                                             self.data_hora_fim.strftime('%c'))
 
+    @property
+    def data_hora(self):
+        return self.data_hora_inicio
+
     class Meta:
         ordering = ('data_hora_inicio',)
 
@@ -90,6 +94,10 @@ class Voo(models.Model):
                                                                                       self.cidade_chegada,
                                                                                       self.data_hora_chegada
                                                                                       .strftime("%A, %d. %B %Y %I:%M%p"))
+
+    @property
+    def data_hora(self):
+        return self.data_hora_partida
 
     class Meta:
         verbose_name = 'Vôo'
