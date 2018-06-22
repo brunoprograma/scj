@@ -1,8 +1,14 @@
 import re
+from ajax_select.fields import AutoCompleteSelectMultipleField
 from django import forms
 from django.utils import timezone
 from agenda.forms import MyModelForm
 from .models import *
+
+
+class FormEscolheEntidade(forms.Form):
+    _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
+    entidades = AutoCompleteSelectMultipleField('entidades', required=True, label='Pessoas ou Entidades', help_text='')
 
 
 class FormEntidade(MyModelForm):

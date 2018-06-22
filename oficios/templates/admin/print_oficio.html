@@ -1,0 +1,23 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+
+<p>Selecione as Pessoas ou Entidades para imprimir o Ofício</p>
+
+<form action="" method="post">{% csrf_token %}
+
+    {{ entidades_form }}
+
+    <p>O seguinte Ofício será impresso:</p>
+
+    <ul>{{ oficios|unordered_list }}</ul>
+
+    <input type="hidden" name="action" value="print_oficio" />
+    <input type="submit" name="print" value="Imprimir" />
+</form>
+
+{% endblock %}
+
+{% block extrahead %}
+    {{ entidades_form.media }}
+{% endblock %}

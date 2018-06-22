@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ADMIN_SITE_TITLE = 'SCJ'
+ADMIN_INDEX_TITLE = 'Início'
+ADMIN_SITE_HEADER = 'SCJ'
 
 # Application definition
 

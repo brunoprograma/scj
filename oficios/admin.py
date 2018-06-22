@@ -2,6 +2,7 @@ from rangefilter.filter import DateRangeFilter
 from ajax_select.admin import AjaxSelectAdmin
 from django.contrib import admin
 from django.db import transaction
+from django.shortcuts import render_to_response, HttpResponseRedirect
 from agenda.admin import MyModelAdmin
 from .models import *
 from .forms import *
@@ -49,7 +50,28 @@ class OficioAdmin(MyModelAdmin):
     search_fields = ('id', 'assunto')
     list_filter = (('data', DateRangeFilter),)
     inlines = [EnvioOficioAdmin_Inline]
-    actions = ['cadastrar_envio']
+    actions = ['cadastrar_envio', 'print_oficio']
+
+    def print_oficio(self, request, queryset):
+        form = None
+
+        if 'print' in request.POST:
+            form = FormEscolheEntidade(request.POST)
+
+            if form.is_valid():
+                tag = form.cleaned_data['entidades']
+
+                # gera e retorna o PDF
+
+                # self.message_user(request, "Successfully added tag %s to %d article%s." % (tag, count, plural))
+                return HttpResponseRedirect(request.get_full_path())
+
+        if not form:
+            form = FormEscolheEntidade(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+
+        return render_to_response('admin/print_oficio.html', {'oficios': queryset, 'entidades_form': form})
+
+    print_oficio.short_description = "Imprimir Ofício selecionado"
 
     @transaction.atomic
     def cadastrar_envio(self, request, queryset):
