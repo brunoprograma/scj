@@ -1,7 +1,8 @@
-from io import StringIO, BytesIO
+from io import BytesIO
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from rangefilter.filter import DateRangeFilter
 from ajax_select.admin import AjaxSelectAdmin
+from django.conf import settings
 from django.contrib import admin, messages
 from django.db import transaction
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
@@ -100,7 +101,14 @@ class OficioAdmin(MyModelAdmin):
             if not form:
                 form = FormEscolheEntidade(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
 
-            return render(request, 'admin/print_oficio.html', {'oficios': queryset, 'entidades_form': form})
+            context = {
+                'oficios': queryset,
+                'entidades_form': form,
+                'site_header': settings.ADMIN_SITE_HEADER,
+                'site_title': settings.ADMIN_SITE_TITLE,
+                'index_title': settings.ADMIN_INDEX_TITLE
+            }
+            return render(request, 'admin/print_oficio.html', context)
 
         self.message_user(request, "Selecione apenas 1 Ofício para imprimir.", level=messages.ERROR)
         return HttpResponseRedirect(request.get_full_path())
