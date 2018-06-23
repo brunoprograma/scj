@@ -1,11 +1,14 @@
+from io import StringIO, BytesIO
+from PyPDF2 import PdfFileReader, PdfFileWriter
 from rangefilter.filter import DateRangeFilter
 from ajax_select.admin import AjaxSelectAdmin
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db import transaction
-from django.shortcuts import render_to_response, HttpResponseRedirect
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from agenda.admin import MyModelAdmin
 from .models import *
 from .forms import *
+from .render import oficio_html_to_pdf
 
 
 @admin.register(Cargo)
@@ -53,23 +56,54 @@ class OficioAdmin(MyModelAdmin):
     actions = ['cadastrar_envio', 'print_oficio']
 
     def print_oficio(self, request, queryset):
-        form = None
+        if len(queryset) == 1:
+            form = None
+            if 'print' in request.POST:
+                form = FormEscolheEntidade(request.POST)
 
-        if 'print' in request.POST:
-            form = FormEscolheEntidade(request.POST)
+                if form.is_valid():
+                    response = HttpResponse(content_type="application/pdf")
+                    output = PdfFileWriter()
+                    success = True
 
-            if form.is_valid():
-                tag = form.cleaned_data['entidades']
+                    oficio = queryset[0]
+                    entidades = form.cleaned_data['entidades']
 
-                # gera e retorna o PDF
+                    for entidade in entidades:
+                        params = {
+                            'oficio': oficio,
+                            'regional': oficio.regional,
+                            'entidade': entidade,
+                            'endereco': oficio.deputado.endereco_principal
+                        }
 
-                # self.message_user(request, "Successfully added tag %s to %d article%s." % (tag, count, plural))
-                return HttpResponseRedirect(request.get_full_path())
+                        pdf_response = oficio_html_to_pdf('oficio.html', params)
 
-        if not form:
-            form = FormEscolheEntidade(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+                        if not pdf_response:
+                            success = False
+                            break
+                        else:
+                            input = PdfFileReader(BytesIO(pdf_response))
+                            pages = input.pages
+                            for page in pages:
+                                output.addPage(page)
 
-        return render_to_response('admin/print_oficio.html', {'oficios': queryset, 'entidades_form': form})
+                    if success:
+                        outputStream = BytesIO()
+                        output.write(outputStream)
+                        response.write(outputStream.getvalue())
+                        return response
+                    else:
+                        self.message_user(request, "Erro ao gerar PDF.", level=messages.ERROR)
+                        return HttpResponseRedirect(request.get_full_path())
+
+            if not form:
+                form = FormEscolheEntidade(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+
+            return render(request, 'admin/print_oficio.html', {'oficios': queryset, 'entidades_form': form})
+
+        self.message_user(request, "Selecione apenas 1 Ofício para imprimir.", level=messages.ERROR)
+        return HttpResponseRedirect(request.get_full_path())
 
     print_oficio.short_description = "Imprimir Ofício selecionado"
 

@@ -24,7 +24,6 @@ admin.site.index_title = settings.ADMIN_INDEX_TITLE
 
 urlpatterns = [
     path('', admin.site.urls),
-    path('ajax_select/', include('ajax_select.urls')),
-    path('oficios/', include('oficios.urls'))
+    path('ajax_select/', include('ajax_select.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

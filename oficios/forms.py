@@ -15,8 +15,10 @@ class FormEntidade(MyModelForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
+        ini = cleaned_data.get('inicio_mandato')
+        fim = cleaned_data.get('fim_mandato')
 
-        if cleaned_data.get('inicio_mandato') > cleaned_data.get('fim_mandato'):
+        if (ini and fim) and (ini > fim):
             raise forms.ValidationError('O inicio do mandato não pode ser posterior ao fim do mandato!')
 
     class Meta:
