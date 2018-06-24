@@ -81,7 +81,7 @@ class CidadeAdmin(admin.ModelAdmin):
 
 
 @admin.register(Regional)
-class RegionalAdmin(admin.ModelAdmin):
+class RegionalAdmin(MyModelAdmin):
     list_display = ('nome', )
     search_fields = ('nome',)
     form = FormRegional

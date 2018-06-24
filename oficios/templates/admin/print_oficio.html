@@ -1,4 +1,4 @@
-{% extends "admin/base_site.html" %}
+{% extends "admin/base_site.html" %}{% load admin_static %}
 
 {% block title %}Imprimir Ofício | {{ site_title|default:_('Django site admin') }}{% endblock %}
 
@@ -7,13 +7,11 @@
 <p>Selecione as Pessoas ou Entidades para imprimir o Ofício</p>
 
 <form action="" method="post">{% csrf_token %}
+    {{ entidades_form.as_p }}
 
-    {{ entidades_form }}
-
+    <hr /><br />
     <p>O seguinte Ofício será impresso:</p>
-
     <ul>{{ oficios|unordered_list }}</ul>
-
     <input type="hidden" name="action" value="print_oficio" />
     <input type="submit" name="print" value="Imprimir" />
 </form>
@@ -21,5 +19,10 @@
 {% endblock %}
 
 {% block extrahead %}
+    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
     {{ entidades_form.media }}
+{% endblock %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />
 {% endblock %}

@@ -1,14 +1,22 @@
 import re
-from ajax_select.fields import AutoCompleteSelectMultipleField
 from django import forms
 from django.utils import timezone
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from agenda.forms import MyModelForm
 from .models import *
 
 
 class FormEscolheEntidade(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.oficio = kwargs.pop('oficio')
+        super(FormEscolheEntidade, self).__init__(*args, **kwargs)
+        if self.oficio:
+            self.fields['entidades'].queryset = Entidade.objects.ativo(deputado=self.oficio.deputado, regional=self.oficio.regional)
+
     _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
-    entidades = AutoCompleteSelectMultipleField('entidades', required=True, label='Pessoas ou Entidades', help_text='')
+    entidades = forms.ModelMultipleChoiceField(Entidade.objects.ativo(), label='',
+                                               widget=FilteredSelectMultiple(verbose_name='Pessoas ou Entidades',
+                                                                             is_stacked=False))
 
 
 class FormEntidade(MyModelForm):

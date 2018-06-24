@@ -58,16 +58,16 @@ class OficioAdmin(MyModelAdmin):
 
     def print_oficio(self, request, queryset):
         if len(queryset) == 1:
+            oficio = queryset[0]
             form = None
             if 'print' in request.POST:
-                form = FormEscolheEntidade(request.POST)
+                form = FormEscolheEntidade(request.POST, oficio=oficio)
 
                 if form.is_valid():
                     response = HttpResponse(content_type="application/pdf")
                     output = PdfFileWriter()
                     success = True
 
-                    oficio = queryset[0]
                     entidades = form.cleaned_data['entidades']
 
                     for entidade in entidades:
@@ -99,7 +99,7 @@ class OficioAdmin(MyModelAdmin):
                         return HttpResponseRedirect(request.get_full_path())
 
             if not form:
-                form = FormEscolheEntidade(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+                form = FormEscolheEntidade(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)}, oficio=oficio)
 
             context = {
                 'oficios': queryset,
