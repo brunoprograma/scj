@@ -1,4 +1,9 @@
+from itertools import chain
+from operator import attrgetter
+from datetime import datetime
 from django.contrib import admin
+from django.shortcuts import render
+from django.utils import formats
 from rangefilter.filter import DateTimeRangeFilter
 from .models import *
 from .forms import *
@@ -58,6 +63,47 @@ class CompromissoAdmin(MyModelAdmin):
     search_fields = ('deputado', 'local')
     list_filter = (('data_hora_inicio', DateTimeRangeFilter),)
     form = FormCompromisso
+    change_list_template = 'admin/custom_change_list.html'
+
+    def changelist_view(self, request, extra_context=None):
+        mutable = request.GET._mutable
+        request.GET._mutable = True
+        print_roteiro = request.GET.pop('print', None)
+        request.GET._mutable = mutable
+        data_ini_gte_data = request.GET.get('data_hora_inicio__gte_0', None)
+        data_ini_gte_hora = request.GET.get('data_hora_inicio__gte_1', None)
+        data_ini_lte_data = request.GET.get('data_hora_inicio__lte_0', None)
+        data_ini_lte_hora = request.GET.get('data_hora_inicio__lte_1', None)
+
+        if print_roteiro and self.is_customer(request.user) and data_ini_gte_data and data_ini_gte_hora and \
+                data_ini_lte_data and data_ini_lte_hora:
+            deputado = request.user.usuario.deputado
+            data_ini_gte_data = datetime.strptime(data_ini_gte_data, formats.get_format('DATE_INPUT_FORMATS')[0]).date()
+            data_ini_gte_hora = datetime.strptime(data_ini_gte_hora, formats.get_format('TIME_INPUT_FORMATS')[0]).time()
+            data_ini_lte_data = datetime.strptime(data_ini_lte_data, formats.get_format('DATE_INPUT_FORMATS')[0]).date()
+            data_ini_lte_hora = datetime.strptime(data_ini_lte_hora, formats.get_format('TIME_INPUT_FORMATS')[0]).time()
+
+            data_ini = datetime.combine(data_ini_gte_data, data_ini_gte_hora)
+            data_fim = datetime.combine(data_ini_lte_data, data_ini_lte_hora)
+
+            compromissos = Compromisso.objects.filter(deputado=deputado,
+                                                      data_hora_inicio__range=[data_ini,
+                                                                               data_fim])
+            voos = Voo.objects.filter(deputado=deputado, data_hora_partida__range=[data_ini,
+                                                                                   data_fim])
+
+            itens = sorted(chain(compromissos, voos), key=attrgetter('data_hora'))
+
+            ctx = {
+                'deputado': deputado,
+                'inicio': data_ini,
+                'fim': data_fim,
+                'itens': itens
+            }
+
+            return render(request, 'email.html', ctx)
+
+        return super(CompromissoAdmin, self).changelist_view(request, extra_context)
 
 
 @admin.register(Companhia)
