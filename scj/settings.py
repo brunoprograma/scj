@@ -31,6 +31,8 @@ ADMIN_SITE_TITLE = 'SCJ'
 ADMIN_INDEX_TITLE = 'Início'
 ADMIN_SITE_HEADER = 'SCJ'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Application definition
 
 INSTALLED_APPS = [
