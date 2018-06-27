@@ -33,7 +33,8 @@ class EntidadeAdmin(MyModelAdmin, AjaxSelectAdmin):
     search_fields = ('nome',)
 
 
-class EnvioOficioAdmin_Inline(admin.StackedInline):
+@admin.register(EnvioOficio)
+class EnvioOficioAdmin(admin.ModelAdmin):
     model = EnvioOficio
     readonly_fields = ('enviado', 'erros', 'data_hora_envio')
 
@@ -41,7 +42,7 @@ class EnvioOficioAdmin_Inline(admin.StackedInline):
         return False
 
     def has_delete_permission(self, request, obj=None):
-        perm = super(EnvioOficioAdmin_Inline, self).has_delete_permission(request, obj)
+        perm = super(EnvioOficioAdmin, self).has_delete_permission(request, obj)
         if obj and not obj.enviado:
             return perm
         return False
@@ -53,7 +54,6 @@ class OficioAdmin(MyModelAdmin):
     form = FormOficio
     search_fields = ('id', 'assunto')
     list_filter = (('data', DateRangeFilter),)
-    inlines = [EnvioOficioAdmin_Inline]
     actions = ['cadastrar_envio', 'print_oficio']
 
     def print_oficio(self, request, queryset):
