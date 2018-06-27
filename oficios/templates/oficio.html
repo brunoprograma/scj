@@ -8,14 +8,40 @@
     <style>
         @page {
             size: A4;
-            margin: 1.5cm;
+            margin: 5cm 2cm 3cm 2cm;
 
-            @frame cabecalho{
-                -pdf-frame-content: header_content;
+            @frame header{
+                -pdf-frame-content: cabecalho;
+                left: 2cm;
+                top: 2cm;
+                height: 90px;
+                width: 90px;
             }
 
-            @frame rodape{
-                -pdf-frame-content: footer_content;
+            @frame header_text{
+                -pdf-frame-content: cabecalho_text;
+                left: 4.5cm;
+                top: 2.5cm;
+                height: 90px;
+            }
+
+            @frame header_text2{
+                -pdf-frame-content: cabecalho_text2;
+                left: 4.5cm;
+                top: 3.3cm;
+                height: 90px;
+            }
+
+            @frame footer{
+                -pdf-frame-content: rodape;
+                left: 2cm;
+                top: 27cm;
+            }
+
+            @frame footer2{
+                -pdf-frame-content: rodape2;
+                left: 2cm;
+                top: 27.5cm;
             }
         }
 
@@ -33,30 +59,15 @@
         }
 
         p{
+            font-size: 14px;
             margin: 0px;
+            padding: 0px;
         }
 
-        #cabecalho img{
-            width: 80px;
-            height: 80px;
-            float: left;
-            margin-right: 10px;
-        }
-
-        .cabecalho_text{
-            margin-left: 90px;
-            padding-top: -55px;
-        }
-
-        .assinatura p{
+        td{
+            font-size: 12px;
             margin: 0px;
-            text-align: center;
-        }
-
-
-        #rodape p{
-            color: #BBBBBB;
-            margin: 0px;
+            padding: 0px;
         }
     </style>
 
@@ -66,42 +77,49 @@
     <div id="cabecalho">
         <img src="{% static 'brasao.png' %}">
     </div>
-    <div class="cabecalho_text">
+
+    <div id="cabecalho_text">
         <h1>CÂMARA DOS DEPUTADOS</h1>
+    </div>
+
+    <div id="cabecalho_text2">
         <h2>Gabinete do Deputado Federal {{ oficio.deputado.nome }} {{ oficio.deputado.partido }}/{{ oficio.deputado.estado }}</h2>
     </div>
 
     <div>
-        <table border="0" style="margin-top: 20px">
+        <table border="0">
             <tr>
                 <td>Ofício N° {{ oficio.id }}/{{ oficio.data.year }} - {{ oficio.deputado.abreviatura_oficio }}</td>
-                <td style="text-align: right;">Brasília, {{ oficio.data }}</td>
+                <td style="text-align: right">Brasília, {{ oficio.data }}</td>
             </tr>
         </table>
     </div>
 
-    <div style="padding-top: 20px">
-        <p>À Sua Excelência {{ oficio.deputado.tratamento }}</p>
+    <div>
+        <p style=" margin-top: 20px">À Sua Excelência {{ oficio.deputado.tratamento }}</p>
         <p><b>{{ entidade.nome }}</b></p>
         <p>{{ entidade.cargo }}</p>
     </div>
 
-    <div style="padding-top: 50px">
-        <p><b>Assunto: </b> {{ oficio.assunto }}</p>
+    <div>
+        <p style="margin-top: 20px"><b>Assunto: </b> {{ oficio.assunto }}</p>
     </div>
 
-    <div class="corpo">
-        <p>{{ oficio.descricao }}</p>
+    <div>
+        <p style="margin-top: 15px;">{{ oficio.descricao|linebreaks }}</p>
     </div>
 
-    <div class="assinatura">
-        <p><b>{{ oficio.deputado.tratamento }}{{ oficio.deputado.nome }}</b></p>
+    <div style="text-align: center;">
+        <p style="margin-top: 40px"><b>{{ oficio.deputado.tratamento }}{{ oficio.deputado.nome }}</b></p>
         <p>Deputado Federal ({{ oficio.deputado.partido }})</p>
         <p>{{ oficio.deputado.mensagem }}</p>
     </div>
 
-    <div id="rodape">
+    <div id="rodape" style="color: #BBBBBB">
         <p>Brasília – DF | Câmara dos Deputados - {{ endereco.complemento }} - {{ endereco.gabinete }} - {{ endereco.cep }}</p>
+    </div>
+
+    <div id="rodape2" style="color: #BBBBBB">
         <p>Tel.: {{ endereco.telefone }} - {{ endereco.fax }} E-mail: {{ endereco.email }}</p>
     </div>
 </body>
