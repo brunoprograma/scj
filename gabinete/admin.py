@@ -1,3 +1,4 @@
+from ajax_select.admin import AjaxSelectAdmin, AjaxSelectAdminStackedInline
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
@@ -13,14 +14,14 @@ class PartidoAdmin(admin.ModelAdmin):
     search_fields = ('sigla', 'nome')
 
 
-class EnderecoDeputado_Inline(admin.StackedInline):
+class EnderecoDeputado_Inline(AjaxSelectAdminStackedInline):
     list_display = ('telefone', 'celular', 'email')
     form = FormEnderecoDeputado
     model = EnderecoDeputado
 
 
 @admin.register(Deputado)
-class DeputadoAdmin(admin.ModelAdmin):
+class DeputadoAdmin(AjaxSelectAdmin):
     form = FormDeputado
     list_display = ('nome', 'partido', 'estado')
     list_filter = ('partido', 'estado')
@@ -75,14 +76,14 @@ class CidadeAdmin(admin.ModelAdmin):
 
 
 @admin.register(Regional)
-class RegionalAdmin(MyModelAdmin):
+class RegionalAdmin(MyModelAdmin, AjaxSelectAdmin):
     list_display = ('nome', )
     search_fields = ('nome',)
     form = FormRegional
 
 
 @admin.register(User)
-class UserAdmin(BaseUserAdmin, MyModelAdmin):
+class UserAdmin(BaseUserAdmin, MyModelAdmin, AjaxSelectAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 

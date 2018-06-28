@@ -7,14 +7,11 @@ from .models import *
 
 
 class UserCreationForm(BaseUserCreationForm, MyModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    deputado = AutoCompleteSelectField('deputados', label='Deputado', help_text=None)
-
     class Meta:
         model = User
         fields = ("deputado", "email", "password1", "password2")
+
+    deputado = AutoCompleteSelectField('deputados', label='Deputado', help_text=None)
 
 
 class UserChangeForm(BaseUserChangeForm, MyModelForm):

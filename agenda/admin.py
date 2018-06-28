@@ -1,6 +1,7 @@
 from itertools import chain
 from operator import attrgetter
 from datetime import datetime
+from ajax_select.admin import AjaxSelectAdmin
 from django.contrib import admin
 from django.shortcuts import render
 from django.utils import formats
@@ -50,14 +51,14 @@ class MyModelAdmin(admin.ModelAdmin):
 
 
 @admin.register(TipoCompromisso)
-class TipoCompromissoAdmin(MyModelAdmin):
+class TipoCompromissoAdmin(MyModelAdmin, AjaxSelectAdmin):
     list_display = ('deputado', 'nome')
     search_fields = ('nome',)
     form = FormTipoCompromisso
 
 
 @admin.register(Compromisso)
-class CompromissoAdmin(MyModelAdmin):
+class CompromissoAdmin(MyModelAdmin, AjaxSelectAdmin):
     list_display = ('deputado', 'cidade', 'local', 'data_hora_inicio', 'data_hora_fim', 'tipo')
     search_fields = ('deputado', 'local')
     list_filter = (('data_hora_inicio', DateTimeRangeFilter),)
@@ -112,7 +113,7 @@ class CompanhiaAdmin(admin.ModelAdmin):
 
 
 @admin.register(Voo)
-class VooAdmin(MyModelAdmin):
+class VooAdmin(MyModelAdmin, AjaxSelectAdmin):
     list_display = ('deputado', 'localizador', 'cidade_partida', 'data_hora_partida', 'cidade_chegada', 'data_hora_chegada')
     search_fields = ('deputado','localizador')
     list_filter = (('data_hora_partida', DateTimeRangeFilter),)

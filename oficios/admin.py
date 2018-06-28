@@ -1,7 +1,7 @@
 from io import BytesIO
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from rangefilter.filter import DateRangeFilter
-from ajax_select.admin import AjaxSelectAdmin
+from ajax_select.admin import AjaxSelectAdmin, AjaxSelectAdminStackedInline
 from django.conf import settings
 from django.contrib import admin, messages
 from django.db import transaction
@@ -13,13 +13,13 @@ from .render import oficio_html_to_pdf
 
 
 @admin.register(Cargo)
-class CargoAdmin(MyModelAdmin):
+class CargoAdmin(MyModelAdmin, AjaxSelectAdmin):
     list_display = ('nome',)
     search_fields = ('nome', )
     form = FormCargo
 
 
-class ContatoEntidadeAdmin_Inline(admin.StackedInline):
+class ContatoEntidadeAdmin_Inline(AjaxSelectAdminStackedInline):
     list_display = ('telefone', 'celular', 'email')
     form = FormContatoEntidade
     model = ContatoEntidade
@@ -49,7 +49,7 @@ class EnvioOficioAdmin(admin.ModelAdmin):
 
 
 @admin.register(Oficio)
-class OficioAdmin(MyModelAdmin):
+class OficioAdmin(MyModelAdmin, AjaxSelectAdmin):
     list_display = ('id', 'data', 'regional', 'assunto')
     form = FormOficio
     search_fields = ('id', 'assunto')
