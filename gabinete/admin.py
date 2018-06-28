@@ -28,13 +28,9 @@ class DeputadoAdmin(AjaxSelectAdmin):
     search_fields = ('nome', )
     inlines = [EnderecoDeputado_Inline]
 
-    def is_customer(self, user):
-        usuario = getattr(user, 'usuario', None)
-        return (not user.is_superuser) and usuario
-
     def get_queryset(self, request):
         queryset = super(DeputadoAdmin, self).get_queryset(request)
-        if self.is_customer(request.user):
+        if not request.user.is_superuser:
             return queryset.filter(deputado=request.user.deputado)
         return queryset
 
@@ -42,7 +38,7 @@ class DeputadoAdmin(AjaxSelectAdmin):
         permission = super(DeputadoAdmin, self).has_change_permission(request=request, obj=obj)
         obj_deputado = obj
 
-        if obj_deputado and self.is_customer(request.user) and request.user.deputado != obj_deputado:
+        if obj_deputado and (not request.user.is_superuser) and request.user.deputado != obj_deputado:
             return False
 
         return permission
@@ -51,7 +47,7 @@ class DeputadoAdmin(AjaxSelectAdmin):
         permission = super(DeputadoAdmin, self).has_delete_permission(request=request, obj=obj)
         obj_deputado = obj
 
-        if obj_deputado and self.is_customer(request.user) and request.user.deputado != obj_deputado:
+        if obj_deputado and (not request.user.is_superuser) and request.user.deputado != obj_deputado:
             return False
 
         return permission
@@ -113,12 +109,9 @@ class UserAdmin(BaseUserAdmin, MyModelAdmin, AjaxSelectAdmin):
             return self.customer_fieldsets
         return super().get_fieldsets(request, obj)
 
-    def is_customer(self, user):
-        return not user.is_superuser
-
     def has_change_permission(self, request, obj=None):
         perm = super(UserAdmin, self).has_change_permission(request, obj)
-        if obj and self.is_customer(request.user):
+        if obj and (not request.user.is_superuser):
             if (not obj.deputado) or (obj.deputado != request.user.deputado):
                 return False
 

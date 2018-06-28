@@ -11,12 +11,10 @@ from .forms import *
 
 
 class MyModelAdmin(admin.ModelAdmin):
-    def is_customer(self, user):
-        return not user.is_superuser
 
     def get_queryset(self, request):
         queryset = super(MyModelAdmin, self).get_queryset(request)
-        if self.is_customer(request.user):
+        if not request.user.is_superuser:
             return queryset.filter(deputado=request.user.deputado)
         return queryset
 
@@ -24,7 +22,7 @@ class MyModelAdmin(admin.ModelAdmin):
         permission = super(MyModelAdmin, self).has_change_permission(request=request, obj=obj)
         obj_deputado = getattr(obj, 'deputado', None)
 
-        if obj_deputado and self.is_customer(request.user) and request.user.deputado != obj_deputado:
+        if obj_deputado and (not request.user.is_superuser) and request.user.deputado != obj_deputado:
             return False
 
         return permission
@@ -33,7 +31,7 @@ class MyModelAdmin(admin.ModelAdmin):
         permission = super(MyModelAdmin, self).has_delete_permission(request=request, obj=obj)
         obj_deputado = getattr(obj, 'deputado', None)
 
-        if obj_deputado and self.is_customer(request.user) and request.user.deputado != obj_deputado:
+        if obj_deputado and (not request.user.is_superuser) and request.user.deputado != obj_deputado:
             return False
 
         return permission
@@ -44,7 +42,6 @@ class MyModelAdmin(admin.ModelAdmin):
         class AdminFormWithRequest(adminform):
             def __new__(cls, *args, **kwargs):
                 kwargs['request'] = request
-                kwargs['is_customer'] = self.is_customer(request.user)
                 return adminform(*args, **kwargs)
 
         return AdminFormWithRequest
@@ -75,7 +72,7 @@ class CompromissoAdmin(MyModelAdmin, AjaxSelectAdmin):
         data_ini_lte_data = request.GET.get('data_hora_inicio__lte_0', None)
         data_ini_lte_hora = request.GET.get('data_hora_inicio__lte_1', None)
 
-        if print_roteiro and self.is_customer(request.user) and data_ini_gte_data and data_ini_gte_hora and \
+        if print_roteiro and (not request.user.is_superuser) and data_ini_gte_data and data_ini_gte_hora and \
                 data_ini_lte_data and data_ini_lte_hora:
             deputado = request.user.deputado
             data_ini_gte_data = datetime.strptime(data_ini_gte_data, formats.get_format('DATE_INPUT_FORMATS')[0]).date()

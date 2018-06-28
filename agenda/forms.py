@@ -6,7 +6,7 @@ from .models import Voo, Compromisso, TipoCompromisso
 class MyModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
-        self.is_customer = kwargs.pop('is_customer', None)
+        self.is_customer = self.request and not self.request.user.is_superuser
         super(MyModelForm, self).__init__(*args, **kwargs)
         if self.is_customer:
             self.fields['deputado'].widget = forms.HiddenInput()
