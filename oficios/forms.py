@@ -1,4 +1,5 @@
 import re
+from ajax_select.fields import AutoCompleteSelectField
 from django import forms
 from django.utils import timezone
 from django.contrib.admin.widgets import FilteredSelectMultiple
@@ -32,6 +33,12 @@ class FormEntidade(MyModelForm):
     class Meta:
         model = Entidade
         exclude = []
+
+    deputado = AutoCompleteSelectField('deputados', label='Deputado', help_text=None)
+    regional = AutoCompleteSelectField('regionais', label='Regional', help_text=None)
+    cargo = AutoCompleteSelectField('cargos', label='Cargo', help_text=None)
+    partido = AutoCompleteSelectField('partidos', label='Partido', help_text=None)
+    cidade = AutoCompleteSelectField('cidades', label='Cidade', help_text=None)
 
 
 class FormContatoEntidade(forms.ModelForm):
@@ -79,9 +86,14 @@ class FormOficio(MyModelForm):
         model = Oficio
         exclude = []
 
+    deputado = AutoCompleteSelectField('deputados', label='Deputado', help_text=None)
+    regional = AutoCompleteSelectField('regionais', label='Regional', help_text=None)
+
 
 class FormCargo(MyModelForm):
 
     class Meta:
         model = Cargo
         exclude = []
+
+    deputado = AutoCompleteSelectField('deputados', label='Deputado', help_text=None)

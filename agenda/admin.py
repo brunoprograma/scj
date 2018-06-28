@@ -11,20 +11,19 @@ from .forms import *
 
 class MyModelAdmin(admin.ModelAdmin):
     def is_customer(self, user):
-        usuario = getattr(user, 'usuario', None)
-        return (not user.is_superuser) and usuario
+        return not user.is_superuser
 
     def get_queryset(self, request):
         queryset = super(MyModelAdmin, self).get_queryset(request)
         if self.is_customer(request.user):
-            return queryset.filter(deputado=request.user.usuario.deputado)
+            return queryset.filter(deputado=request.user.deputado)
         return queryset
 
     def has_change_permission(self, request, obj=None):
         permission = super(MyModelAdmin, self).has_change_permission(request=request, obj=obj)
         obj_deputado = getattr(obj, 'deputado', None)
 
-        if obj_deputado and self.is_customer(request.user) and request.user.usuario.deputado != obj_deputado:
+        if obj_deputado and self.is_customer(request.user) and request.user.deputado != obj_deputado:
             return False
 
         return permission
@@ -33,7 +32,7 @@ class MyModelAdmin(admin.ModelAdmin):
         permission = super(MyModelAdmin, self).has_delete_permission(request=request, obj=obj)
         obj_deputado = getattr(obj, 'deputado', None)
 
-        if obj_deputado and self.is_customer(request.user) and request.user.usuario.deputado != obj_deputado:
+        if obj_deputado and self.is_customer(request.user) and request.user.deputado != obj_deputado:
             return False
 
         return permission
@@ -77,7 +76,7 @@ class CompromissoAdmin(MyModelAdmin):
 
         if print_roteiro and self.is_customer(request.user) and data_ini_gte_data and data_ini_gte_hora and \
                 data_ini_lte_data and data_ini_lte_hora:
-            deputado = request.user.usuario.deputado
+            deputado = request.user.deputado
             data_ini_gte_data = datetime.strptime(data_ini_gte_data, formats.get_format('DATE_INPUT_FORMATS')[0]).date()
             data_ini_gte_hora = datetime.strptime(data_ini_gte_hora, formats.get_format('TIME_INPUT_FORMATS')[0]).time()
             data_ini_lte_data = datetime.strptime(data_ini_lte_data, formats.get_format('DATE_INPUT_FORMATS')[0]).date()

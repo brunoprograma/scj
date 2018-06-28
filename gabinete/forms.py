@@ -1,14 +1,24 @@
 import re
+from ajax_select.fields import AutoCompleteSelectField
 from django import forms
+from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm, UserChangeForm as BaseUserChangeForm
 from agenda.forms import MyModelForm
 from .models import *
 
 
-class FormUsuario(MyModelForm):
+class UserCreationForm(BaseUserCreationForm, MyModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    deputado = AutoCompleteSelectField('deputados', label='Deputado', help_text=None)
 
     class Meta:
-        model = Usuario
-        exclude = []
+        model = User
+        fields = ("deputado", "email", "password1", "password2")
+
+
+class UserChangeForm(BaseUserChangeForm, MyModelForm):
+    deputado = AutoCompleteSelectField('deputados', label='Deputado', help_text=None)
 
 
 class FormRegional(MyModelForm):
@@ -16,6 +26,18 @@ class FormRegional(MyModelForm):
     class Meta:
         model = Regional
         exclude = []
+
+    deputado = AutoCompleteSelectField('deputados', label='Deputado', help_text=None)
+
+
+class FormDeputado(forms.ModelForm):
+
+    class Meta:
+        model = Deputado
+        exclude = []
+
+    partido = AutoCompleteSelectField('partidos', label='Partido', help_text=None)
+    estado = AutoCompleteSelectField('estados', label='Estado de atuação', help_text=None)
 
 
 class FormEnderecoDeputado(forms.ModelForm):
@@ -47,3 +69,5 @@ class FormEnderecoDeputado(forms.ModelForm):
     class Meta:
         model = EnderecoDeputado
         exclude = []
+
+    cidade = AutoCompleteSelectField('cidades', label='Cidade', help_text=None)

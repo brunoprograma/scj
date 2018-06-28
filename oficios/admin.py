@@ -43,7 +43,7 @@ class EnvioOficioAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         perm = super(EnvioOficioAdmin, self).has_delete_permission(request, obj)
-        if obj and not obj.enviado:
+        if not getattr(obj, 'enviado', None):
             return perm
         return False
 

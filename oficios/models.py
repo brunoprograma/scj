@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.db import models
 from django.utils import timezone
 from gabinete.models import DeputadoManager
@@ -76,7 +77,7 @@ class Oficio(models.Model):
     data = models.DateField()
     regional = models.ForeignKey('gabinete.Regional', on_delete=models.PROTECT)
     assunto = models.CharField(max_length=100)
-    descricao = models.TextField('Descrição')
+    descricao = RichTextField('Descrição')
 
     objects = DeputadoManager()
 

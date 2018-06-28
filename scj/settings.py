@@ -46,11 +46,14 @@ INSTALLED_APPS = [
     'rangefilter',
     'django_crontab',
     'ajax_select',
+    'ckeditor',
 
     'gabinete.apps.GabineteConfig',
     'agenda.apps.AgendaConfig',
     'oficios.apps.OficiosConfig',
 ]
+
+AUTH_USER_MODEL = 'gabinete.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -165,3 +168,15 @@ CRONJOBS = [
 ]
 
 CRONTAB_LOCK_JOBS = True
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source']
+        ]
+    }
+}

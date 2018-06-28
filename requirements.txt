@@ -4,3 +4,4 @@ django-crontab==0.7.1
 django-ajax-selects==1.7.0
 xhtml2pdf==0.2.2
 PyPDF2==1.26.0
+django-ckeditor==5.5.0

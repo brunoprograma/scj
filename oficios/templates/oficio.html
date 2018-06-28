@@ -105,8 +105,8 @@
         <p style="margin-top: 20px"><b>Assunto: </b> {{ oficio.assunto }}</p>
     </div>
 
-    <div>
-        <p style="margin-top: 15px;">{{ oficio.descricao|linebreaks }}</p>
+    <div  style="margin-top: 15px;">
+        {{ oficio.descricao|safe }}
     </div>
 
     <div style="text-align: center;">

@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.core.mail import send_mass_mail
 from django.template.loader import render_to_string
 from datetime import datetime, timedelta
-from gabinete.models import Deputado, Usuario
+from gabinete.models import Deputado, User
 from .models import Compromisso, Voo
 
 log = logging.getLogger('agenda.cron')
@@ -46,14 +46,14 @@ def envia_agenda_semana():
                 'itens': itens
             }
 
-            acessores = Usuario.objects.filter(deputado=deputado, ativo=True)
+            acessores = User.objects.filter(deputado=deputado, is_active=True)
 
             assunto_email = 'Roteiro semanal do Deputado {}'.format(deputado)
             corpo_email = render_to_string('email.html', ctx)
             emails_destino = [contato_deputado.email]
             for acessor in acessores:
-                if acessor.user.email:
-                    emails_destino.append(acessor.user.email)
+                if acessor.email:
+                    emails_destino.append(acessor.email)
 
             mensagens.append((assunto_email, corpo_email, contato_deputado.email, emails_destino))
         else:

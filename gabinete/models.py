@@ -1,5 +1,6 @@
 from django.db import models, transaction
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import AbstractUser
+from django.utils.translation import gettext_lazy as _
 
 
 class DeputadoManager(models.Manager):
@@ -9,35 +10,16 @@ class DeputadoManager(models.Manager):
         return self.filter(ativo=True, *args, **kwargs)
 
 
-class Usuario(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Usuário')
-    deputado = models.ForeignKey('Deputado', on_delete=models.PROTECT)
-    supervisor = models.BooleanField(default=False)
-    ativo = models.BooleanField(default=True)
+class User(AbstractUser):
+    email = models.EmailField(_('email address'), unique=True)
+    deputado = models.ForeignKey('gabinete.Deputado', on_delete=models.PROTECT, null=True, blank=True)
 
-    def __str__(self):
-        return '{}'.format(self.user)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
-    @transaction.atomic
     def save(self, *args, **kwargs):
-        super(Usuario, self).save(*args, **kwargs)
-        self.user.groups.clear()
-        self.user.is_active = self.ativo
-        self.user.is_staff = self.ativo
-        self.user.save()
-
-        if self.ativo:
-            if self.supervisor:
-                groups = Group.objects.filter(id=1)  # grupo supervisores
-            else:
-                groups = Group.objects.filter(id=2)  # grupo acessores
-
-            if groups.exists():
-                self.user.groups.add(groups[0])
-
-    class Meta:
-        verbose_name = 'Acessor'
-        verbose_name_plural = 'Acessores'
+        self.is_staff = True  # isso dá acesso ao ambiente de administração
+        super().save(*args, **kwargs)
 
 
 class Pais(models.Model):

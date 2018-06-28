@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.db import models
 from gabinete.models import DeputadoManager
 
@@ -33,8 +34,8 @@ class Compromisso(models.Model):
                              help_text='Define o tipo de compromisso do parlamentar. Ex.: Reunião, Evento festivo, Etc.')
     local = models.CharField(max_length=60, help_text='Local do evento')
     cidade = models.ForeignKey('gabinete.Cidade', on_delete=models.PROTECT)
-    descricao = models.TextField('Descrição',
-                                 help_text='Descrição geral do evento, para que o parlamentar saiba do que se trata.')
+    descricao = RichTextField('Descrição',
+                              help_text='Descrição geral do evento, para que o parlamentar saiba do que se trata.')
     obs = models.TextField('Observações', blank=True, null=True)
 
     def __str__(self):

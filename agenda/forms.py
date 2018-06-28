@@ -1,3 +1,4 @@
+from ajax_select.fields import AutoCompleteSelectField
 from django import forms
 from .models import Voo, Compromisso, TipoCompromisso
 
@@ -9,13 +10,13 @@ class MyModelForm(forms.ModelForm):
         super(MyModelForm, self).__init__(*args, **kwargs)
         if self.is_customer:
             self.fields['deputado'].widget = forms.HiddenInput()
-            self.fields['deputado'].initial = self.request.user.usuario.deputado
+            self.fields['deputado'].initial = self.request.user.deputado
 
     def clean_deputado(self):
         data = self.cleaned_data.get('deputado')
 
         if self.is_customer:
-            return self.request.user.usuario.deputado
+            return self.request.user.deputado
 
         return data
 
@@ -24,6 +25,8 @@ class FormTipoCompromisso(MyModelForm):
     class Meta:
         model = TipoCompromisso
         exclude = []
+
+    deputado = AutoCompleteSelectField('deputados', label='Deputado', help_text=None)
 
 
 class FormCompromisso(MyModelForm):
@@ -39,6 +42,9 @@ class FormCompromisso(MyModelForm):
     class Meta:
         model = Compromisso
         exclude = []
+
+    deputado = AutoCompleteSelectField('deputados', label='Deputado', help_text=None)
+    cidade = AutoCompleteSelectField('cidades', label='Cidade', help_text=None)
 
 
 class FormVoo(MyModelForm):
@@ -57,3 +63,8 @@ class FormVoo(MyModelForm):
     class Meta:
         model = Voo
         exclude = []
+
+    deputado = AutoCompleteSelectField('deputados', label='Deputado', help_text=None)
+    cidade_partida = AutoCompleteSelectField('cidades', label='Cidade de partida', help_text=None)
+    cidade_chegada = AutoCompleteSelectField('cidades', label='Cidade de chegada', help_text=None)
+    companhia = AutoCompleteSelectField('companhias', label='Companhia aérea', help_text=None)
