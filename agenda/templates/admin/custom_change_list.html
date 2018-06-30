@@ -3,8 +3,9 @@
 {% block object-tools-items %}
 <li>
     {% with request.get_full_path as path %}
-    <a href="{{ path }}{% if '?' not in path %}?{% endif %}&print=1" target="_blank">
-        {% blocktrans %}Imprimir roteiro{% endblocktrans %}
+    <a href="{{ path }}{% if '?' not in path %}?{% endif %}&print=1">
+        {% blocktrans %}Imprimir roteiro{% endblocktrans %}&ensp;
+        <i class="fas fa-print fa-lg"></i>
     </a>
     {% endwith %}
 </li>
@@ -16,4 +17,9 @@
     </a>
 </li>
 {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}">
 {% endblock %}

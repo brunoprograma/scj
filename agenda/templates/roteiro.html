@@ -1,0 +1,33 @@
+{% extends "admin/base_site.html" %}{% load admin_static %}
+
+{% block title %}Enviar Ofício | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block content %}
+
+<p>{{ deputado }}</p>
+<p>{{ inicio|date:'c' }} - {{ fim|date:'c' }}</p>
+{% for item in itens %}
+    {% if item.data_hora_inicio %} {# evento #}
+        <p>{{ item.data_hora_inicio|date:'c' }}</p>
+        <p>{{ item.data_hora_fim|date:'c' }}</p>
+        <p>{{ item.tipo }}</p>
+        <p>{{ item.local }}</p>
+        <p>{{ item.cidade }}</p>
+        {{ item.descricao|safe }}
+        {% if item.obs %}<p>{{ item.obs }}</p>{% endif %}
+    {% else %} {# vôo #}
+        <p>{{ item.cidade_partida }}</p>
+        <p>{{ item.data_hora_partida|date:'c' }}</p>
+        <p>{{ item.cidade_chegada }}</p>
+        <p>{{ item.data_hora_chegada|date:'c' }}</p>
+        <p>{{ item.companhia }}</p>
+        <p>{{ item.localizador }}</p>
+        <p>{{ item.numero }}</p>
+        <p>{{ item.portao }}</p>
+        <p>{{ item.assento }}</p>
+        {% if item.obs %}<p>{{ item.obs }}</p>{% endif %}
+    {% endif %}
+{% empty %}
+{% endfor %}
+
+{% endblock %}

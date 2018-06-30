@@ -1,6 +1,5 @@
 Django==2.0.5
 django-admin-rangefilter==0.3.6
-django-crontab==0.7.1
 django-ajax-selects==1.7.0
 xhtml2pdf==0.2.2
 PyPDF2==1.26.0

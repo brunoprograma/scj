@@ -1,0 +1,28 @@
+{% extends "admin/base_site.html" %}{% load admin_static %}
+
+{% block title %}Enviar Ofício | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block content %}
+
+<p>Selecione as Pessoas ou Entidades para enviar o Ofício</p>
+
+<form action="" method="post">{% csrf_token %}
+    {{ entidades_form.as_p }}
+
+    <hr /><br />
+    <p>O seguinte Ofício será enviado:</p>
+    <ul>{{ oficios|unordered_list }}</ul>
+    <input type="hidden" name="action" value="email_oficio" />
+    <input type="submit" name="send" value="Enviar" />
+</form>
+
+{% endblock %}
+
+{% block extrahead %}
+    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+    {{ entidades_form.media }}
+{% endblock %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />
+{% endblock %}

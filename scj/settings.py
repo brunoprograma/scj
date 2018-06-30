@@ -27,9 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-ADMIN_SITE_TITLE = 'SCJ'
+ADMIN_SITE_TITLE = 'Agenda do Deputado'
 ADMIN_INDEX_TITLE = 'Início'
-ADMIN_SITE_HEADER = 'SCJ'
+ADMIN_SITE_HEADER = 'Agenda do Deputado'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rangefilter',
-    'django_crontab',
     'ajax_select',
     'ckeditor',
 
@@ -152,24 +151,6 @@ LOCALE_PATHS = (
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-# django-crontab configuration
-# See: https://github.com/kraiz/django-crontab/blob/master/README.rst
-#
-# run this command to add all defined jobs from CRONJOBS to crontab (of the user which you are running this command with):
-# python manage.py crontab add
-#
-# show current active jobs of this project:
-# python manage.py crontab show
-#
-# removing all defined jobs is straightforward:
-# python manage.py crontab remove
-
-CRONJOBS = [
-    ('*/1 * * * *', 'oficios.cron.envia_oficios')
-]
-
-CRONTAB_LOCK_JOBS = True
 
 CKEDITOR_CONFIGS = {
     'default': {
