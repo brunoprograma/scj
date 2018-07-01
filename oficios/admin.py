@@ -2,7 +2,7 @@ import logging
 from io import BytesIO
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from rangefilter.filter import DateRangeFilter
-from ajax_select.admin import AjaxSelectAdmin, AjaxSelectAdminStackedInline
+from ajax_select.admin import AjaxSelectAdminStackedInline
 from django.conf import settings
 from django.contrib import admin, messages
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
@@ -17,7 +17,7 @@ log = logging.getLogger('oficios.admin')
 
 
 @admin.register(Cargo)
-class CargoAdmin(MyModelAdmin, AjaxSelectAdmin):
+class CargoAdmin(MyModelAdmin):
     list_display = ('nome',)
     search_fields = ('nome', )
     form = FormCargo
@@ -30,7 +30,7 @@ class ContatoEntidadeAdmin_Inline(AjaxSelectAdminStackedInline):
 
 
 @admin.register(Entidade)
-class EntidadeAdmin(MyModelAdmin, AjaxSelectAdmin):
+class EntidadeAdmin(MyModelAdmin):
     list_display = ('nome', 'regional', 'cargo', 'cidade')
     form = FormEntidade
     inlines = [ContatoEntidadeAdmin_Inline]
@@ -38,7 +38,7 @@ class EntidadeAdmin(MyModelAdmin, AjaxSelectAdmin):
 
 
 @admin.register(Oficio)
-class OficioAdmin(MyModelAdmin, AjaxSelectAdmin):
+class OficioAdmin(MyModelAdmin):
     list_display = ('id', 'data', 'regional', 'assunto')
     form = FormOficio
     search_fields = ('id', 'assunto')

@@ -10,7 +10,7 @@ class MyModelForm(forms.ModelForm):
         super(MyModelForm, self).__init__(*args, **kwargs)
         if self.is_customer:
             self.fields['deputado'].widget = forms.HiddenInput()
-            self.fields['deputado'].initial = self.request.user.deputado
+            self.fields['deputado'].initial = self.request.user.deputado_id
 
     def clean_deputado(self):
         data = self.cleaned_data.get('deputado')

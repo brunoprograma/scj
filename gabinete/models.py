@@ -18,6 +18,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     def save(self, *args, **kwargs):
+        self.username = self.email
         self.is_staff = True  # isso dá acesso ao ambiente de administração
         super().save(*args, **kwargs)
 

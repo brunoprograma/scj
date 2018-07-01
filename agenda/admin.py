@@ -2,6 +2,7 @@ from itertools import chain
 from operator import attrgetter
 from datetime import datetime
 from ajax_select.admin import AjaxSelectAdmin
+from ajax_select.fields import autoselect_fields_check_can_add
 from django.conf import settings
 from django.contrib import admin, messages
 from django.shortcuts import render, HttpResponseRedirect
@@ -15,7 +16,7 @@ class MyModelAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         queryset = super(MyModelAdmin, self).get_queryset(request)
-        if not request.user.is_superuser:
+        if request.user.deputado:
             return queryset.filter(deputado=request.user.deputado)
         return queryset
 
@@ -45,20 +46,23 @@ class MyModelAdmin(admin.ModelAdmin):
                 kwargs['request'] = request
                 return adminform(*args, **kwargs)
 
-        return AdminFormWithRequest
+        form = AdminFormWithRequest
+
+        autoselect_fields_check_can_add(form, self.model, request.user)
+        return form
 
 
 @admin.register(TipoCompromisso)
-class TipoCompromissoAdmin(MyModelAdmin, AjaxSelectAdmin):
-    list_display = ('deputado', 'nome')
+class TipoCompromissoAdmin(MyModelAdmin):
+    list_display = ('nome',)
     search_fields = ('nome',)
     form = FormTipoCompromisso
 
 
 @admin.register(Compromisso)
-class CompromissoAdmin(MyModelAdmin, AjaxSelectAdmin):
-    list_display = ('deputado', 'cidade', 'local', 'data_hora_inicio', 'data_hora_fim', 'tipo')
-    search_fields = ('deputado', 'local')
+class CompromissoAdmin(MyModelAdmin):
+    list_display = ('tipo', 'local', 'cidade', 'data_hora_inicio', 'data_hora_fim')
+    search_fields = ('local', )
     list_filter = (('data_hora_inicio', DateTimeRangeFilter),)
     form = FormCompromisso
     change_list_template = 'admin/custom_change_list.html'
@@ -113,12 +117,12 @@ class CompromissoAdmin(MyModelAdmin, AjaxSelectAdmin):
 @admin.register(Companhia)
 class CompanhiaAdmin(admin.ModelAdmin):
     list_display = ('nome',)
-    list_filter = ('nome',)
+    search_fields = ('nome',)
 
 
 @admin.register(Voo)
-class VooAdmin(MyModelAdmin, AjaxSelectAdmin):
-    list_display = ('deputado', 'localizador', 'cidade_partida', 'data_hora_partida', 'cidade_chegada', 'data_hora_chegada')
-    search_fields = ('deputado','localizador')
+class VooAdmin(MyModelAdmin):
+    list_display = ('companhia', 'localizador', 'cidade_partida', 'data_hora_partida', 'cidade_chegada', 'data_hora_chegada')
+    search_fields = ('localizador', 'numero')
     list_filter = (('data_hora_partida', DateTimeRangeFilter),)
     form = FormVoo

@@ -31,7 +31,12 @@ ADMIN_SITE_TITLE = 'Agenda do Deputado'
 ADMIN_INDEX_TITLE = 'Início'
 ADMIN_SITE_HEADER = 'Agenda do Deputado'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'deputadoagenda@gmail.com'
+EMAIL_HOST_PASSWORD = 'n@t@n123'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Application definition
 

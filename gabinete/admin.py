@@ -30,8 +30,8 @@ class DeputadoAdmin(AjaxSelectAdmin):
 
     def get_queryset(self, request):
         queryset = super(DeputadoAdmin, self).get_queryset(request)
-        if not request.user.is_superuser:
-            return queryset.filter(deputado=request.user.deputado)
+        if request.user.deputado:
+            return queryset.filter(id=request.user.deputado_id)
         return queryset
 
     def has_change_permission(self, request, obj=None):
@@ -72,14 +72,14 @@ class CidadeAdmin(admin.ModelAdmin):
 
 
 @admin.register(Regional)
-class RegionalAdmin(MyModelAdmin, AjaxSelectAdmin):
-    list_display = ('nome', )
+class RegionalAdmin(MyModelAdmin):
+    list_display = ('nome',)
     search_fields = ('nome',)
     form = FormRegional
 
 
 @admin.register(User)
-class UserAdmin(BaseUserAdmin, MyModelAdmin, AjaxSelectAdmin):
+class UserAdmin(BaseUserAdmin, MyModelAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
@@ -101,18 +101,24 @@ class UserAdmin(BaseUserAdmin, MyModelAdmin, AjaxSelectAdmin):
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
         (_('Permissions'), {'fields': ('is_active', 'groups')}),
     )
+    customer2_fieldsets = (
+        (None, {'fields': ('deputado', 'password')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+    )
 
     def get_fieldsets(self, request, obj=None):
+        groups = request.user.groups.all().values_list('id', flat=True)
         if not obj:
             return self.add_fieldsets
-        elif not request.user.is_superuser:
+        elif 2 in groups and not request.user.is_superuser:
             return self.customer_fieldsets
+        elif 1 in groups and not request.user.is_superuser:
+            return self.customer2_fieldsets
         return super().get_fieldsets(request, obj)
 
     def has_change_permission(self, request, obj=None):
         perm = super(UserAdmin, self).has_change_permission(request, obj)
-        if obj and (not request.user.is_superuser):
-            if (not obj.deputado) or (obj.deputado != request.user.deputado):
-                return False
+        if (2 not in request.user.groups.all().values_list('id', flat=True)) and obj and obj != request.user:
+            return False
 
         return perm
