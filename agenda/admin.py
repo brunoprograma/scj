@@ -2,6 +2,7 @@ from itertools import chain
 from operator import attrgetter
 from datetime import datetime
 from ajax_select.admin import AjaxSelectAdmin
+from django.conf import settings
 from django.contrib import admin, messages
 from django.shortcuts import render, HttpResponseRedirect
 from django.utils import formats, timezone
@@ -95,7 +96,10 @@ class CompromissoAdmin(MyModelAdmin, AjaxSelectAdmin):
                     'deputado': deputado,
                     'inicio': data_ini,
                     'fim': data_fim,
-                    'itens': itens
+                    'itens': itens,
+                    'site_header': settings.ADMIN_SITE_HEADER,
+                    'site_title': settings.ADMIN_SITE_TITLE,
+                    'index_title': settings.ADMIN_INDEX_TITLE
                 }
 
                 return render(request, 'roteiro.html', ctx)
