@@ -1,1 +1,1 @@
-web: gunicorn scj.wsgi
+web: gunicorn scj.wsgi --log-file -
