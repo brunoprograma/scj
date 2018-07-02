@@ -26,7 +26,7 @@ SECRET_KEY = 'szl8yncenha79c3^uj$jg33z_vx_(=a4v9&+_(rdwi-bl4h@+$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 ADMIN_SITE_TITLE = 'Agenda do Deputado'
 ADMIN_INDEX_TITLE = 'Início'
