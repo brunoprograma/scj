@@ -53,9 +53,9 @@ INSTALLED_APPS = [
     'ajax_select',
     'ckeditor',
 
-    'gabinete.apps.GabineteConfig',
-    'agenda.apps.AgendaConfig',
-    'oficios.apps.OficiosConfig',
+    'gabinete',
+    'agenda',
+    'oficios',
 ]
 
 AUTH_USER_MODEL = 'gabinete.User'
