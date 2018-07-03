@@ -28,9 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-ADMIN_SITE_TITLE = 'Agenda do Deputado'
+ADMIN_SITE_TITLE = 'Agenda Deputado'
 ADMIN_INDEX_TITLE = 'Início'
-ADMIN_SITE_HEADER = 'Agenda do Deputado'
+ADMIN_SITE_HEADER = 'Agenda Deputado'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
