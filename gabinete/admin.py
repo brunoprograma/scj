@@ -118,7 +118,7 @@ class UserAdmin(BaseUserAdmin, MyModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         perm = super(UserAdmin, self).has_change_permission(request, obj)
-        if (2 not in request.user.groups.all().values_list('id', flat=True)) and obj and obj != request.user:
+        if (not request.user.is_superuser) and (2 not in request.user.groups.all().values_list('id', flat=True)) and obj and obj != request.user:
             return False
 
         return perm
