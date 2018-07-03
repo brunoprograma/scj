@@ -1,42 +1,46 @@
 {% extends "admin/base_site.html" %}{% load admin_static %}
 
-{% block title %}Roteiro | {{ site_title|default:_('Django site admin') }}{% endblock %}
+{% block title %}Enviar Ofício | {{ site_title|default:_('Django site admin') }}{% endblock %}
 
 {% block content %}
 
-<h1>Roteiro de {{ deputado }}</h1>
-<h3>De {{ inicio|date:'c' }} a {{ fim|date:'c' }}</h3>
+<p>{{ deputado }}</p>
+<p>{{ inicio|date:'c' }} - {{ fim|date:'c' }}</p>
 
-<table>
 {% for item in itens %}
-    <tr>
+    <table border="1">
     {% if item.data_hora_inicio %} {# evento #}
-        <th>Evento</th>
-        <td>{{ item.data_hora_inicio|date:'c' }}</td>
-        <td>{{ item.data_hora_fim|date:'c' }}</td>
-        <td>{{ item.tipo }}</td>
-        <td>{{ item.local }}</td>
-        <td>{{ item.cidade }}</td>
-        <td colspan="3">{{ item.descricao|safe }}</td>
-        <td>{% if item.obs %}{{ item.obs|linebreaks }}{% endif %}</td>
+
+        <tr>
+            <td>Data Incio: {{ item.data_hora_inicio|date:'c' }}</td>
+            <td>Data Fim: {{ item.data_hora_fim|date:'c' }}</td>
+            <td colspan="2">Tipo: {{ item.tipo }}</td>
+        </tr>
+        <tr>
+            <td>Local: {{ item.local }}</td>
+            <td colspan="2">Cidade: {{ item.cidade }}</td></tr>
+        <tr>
+            <td colspan="3">{{ item.descricao|safe }}</td>
+        </tr>
+        {% if item.obs %}<tr>OBS.: {{ item.obs }}</tr>{% endif %}
     {% else %} {# vôo #}
-        <th>Vôo</th>
-        <td>{{ item.cidade_partida }}</td>
-        <td>{{ item.data_hora_partida|date:'c' }}</td>
-        <td>{{ item.cidade_chegada }}</td>
-        <td>{{ item.data_hora_chegada|date:'c' }}</td>
-        <td>{{ item.companhia }}</td>
-        <td>{{ item.localizador }}</td>
-        <td>{{ item.numero }}</td>
-        <td>{{ item.portao }}</td>
-        <td>{{ item.assento }}</td>
-        <td>{% if item.obs %}{{ item.obs|linebreaks }}{% endif %}</td>
+        <tr>
+            <td>Partida: {{ item.cidade_partida }}</td>
+            <td>Hora de Partida: {{ item.data_hora_partida|date:'c' }}</td>
+            <td>Hora de Chegada: {{ item.cidade_chegada }}</td>
+            <td colspan="2">Destino: {{ item.data_hora_chegada|date:'c' }}</td>
+        </tr>
+        <tr>
+            <td>Companhia: {{ item.companhia }}</td>
+            <td>Localizador: {{ item.localizador }}</td>
+            <td>Número: {{ item.numero }}</td>
+            <td>Portão Embarque: {{ item.portao }}</td>
+            <td>Assento: {{ item.assento }}</td>
+        </tr>
+        {% if item.obs %}<tr>OBS.: {{ item.obs }}</tr>{% endif %}
     {% endif %}
-    </tr>
+    </table>
 {% empty %}
-    <tr>
-        <td colspan="10">Sem eventos para o período selecionado.</td>
-    </tr>
 {% endfor %}
-</table>
+
 {% endblock %}
