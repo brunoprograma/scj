@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-
+    <p>{{ entidade.pronome }} {{ entidade.tratamento }}</p>
+    <p><b>{{ entidade.nome }}</b></p>
+    <p>{{ entidade.cargo }}</p>
+    <p style="margin-top: 20px">Segue em anexo o ofício {{ oficio.id }}/{{ oficio.data.year }}.</p>
+    <p><b>Assunto: {{ oficio.assunto }}</b></p>
 </body>
 </html>

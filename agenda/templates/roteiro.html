@@ -6,27 +6,49 @@
 
 <p>{{ deputado }}</p>
 <p>{{ inicio|date:'c' }} - {{ fim|date:'c' }}</p>
+
+{#    <tr>#}
+{#        <td>Inicio</td>#}
+{#        <td>Fim</td>#}
+{#        <td>Tipo</td>#}
+{#        <td>Local</td>#}
+{#        <td>Cidade</td>#}
+{#    </tr>#}
+
 {% for item in itens %}
+    <table border="1">
     {% if item.data_hora_inicio %} {# evento #}
-        <p>{{ item.data_hora_inicio|date:'c' }}</p>
-        <p>{{ item.data_hora_fim|date:'c' }}</p>
-        <p>{{ item.tipo }}</p>
-        <p>{{ item.local }}</p>
-        <p>{{ item.cidade }}</p>
-        {{ item.descricao|safe }}
-        {% if item.obs %}<p>{{ item.obs }}</p>{% endif %}
+
+        <tr>
+            <td>Data Incio: {{ item.data_hora_inicio|date:'c' }}</td>
+            <td>Data Fim: {{ item.data_hora_fim|date:'c' }}</td>
+            <td colspan="2">Tipo: {{ item.tipo }}</td>
+        </tr>
+        <tr>
+            <td>Local: {{ item.local }}</td>
+            <td colspan="2">Cidade: {{ item.cidade }}</td></tr>
+        <tr>
+            <td colspan="3">{{ item.descricao|safe }}</td>
+        </tr>
+        {% if item.obs %}<tr>OBS.: {{ item.obs }}</tr>{% endif %}
     {% else %} {# vôo #}
-        <p>{{ item.cidade_partida }}</p>
-        <p>{{ item.data_hora_partida|date:'c' }}</p>
-        <p>{{ item.cidade_chegada }}</p>
-        <p>{{ item.data_hora_chegada|date:'c' }}</p>
-        <p>{{ item.companhia }}</p>
-        <p>{{ item.localizador }}</p>
-        <p>{{ item.numero }}</p>
-        <p>{{ item.portao }}</p>
-        <p>{{ item.assento }}</p>
-        {% if item.obs %}<p>{{ item.obs }}</p>{% endif %}
+        <tr>
+            <td>Partida: {{ item.cidade_partida }}</td>
+            <td>Hora de Partida: {{ item.data_hora_partida|date:'c' }}</td>
+            <td>Hora de Chegada: {{ item.cidade_chegada }}</td>
+            <td colspan="2">Destino: {{ item.data_hora_chegada|date:'c' }}</td>
+        </tr>
+        <tr>
+            <td>Companhia: {{ item.companhia }}</td>
+            <td>Localizador: {{ item.localizador }}</td>
+            <td>Número: {{ item.numero }}</td>
+            <td>Portão Embarque: {{ item.portao }}</td>
+            <td>Assento: {{ item.assento }}</td>
+        </tr>
+        {% if item.obs %}<tr>OBS.: {{ item.obs }}</tr>{% endif %}
     {% endif %}
+    </table>
+    <br />
 {% empty %}
 {% endfor %}
 
