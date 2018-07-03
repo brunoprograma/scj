@@ -7,14 +7,6 @@
 <p>{{ deputado }}</p>
 <p>{{ inicio|date:'c' }} - {{ fim|date:'c' }}</p>
 
-{#    <tr>#}
-{#        <td>Inicio</td>#}
-{#        <td>Fim</td>#}
-{#        <td>Tipo</td>#}
-{#        <td>Local</td>#}
-{#        <td>Cidade</td>#}
-{#    </tr>#}
-
 {% for item in itens %}
     <table border="1">
     {% if item.data_hora_inicio %} {# evento #}
@@ -48,7 +40,6 @@
         {% if item.obs %}<tr>OBS.: {{ item.obs }}</tr>{% endif %}
     {% endif %}
     </table>
-    <br />
 {% empty %}
 {% endfor %}
 
