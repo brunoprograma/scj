@@ -13,6 +13,7 @@ class DeputadoManager(models.Manager):
 class User(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
     deputado = models.ForeignKey('gabinete.Deputado', on_delete=models.PROTECT, null=True, blank=True)
+    ativo = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

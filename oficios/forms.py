@@ -12,15 +12,26 @@ class FormEscolheEntidade(forms.Form):
         self.oficio = kwargs.pop('oficio')
         super(FormEscolheEntidade, self).__init__(*args, **kwargs)
         if self.oficio:
-            self.fields['entidades'].queryset = Entidade.objects.ativo(deputado=self.oficio.deputado, regional=self.oficio.regional)
+            self.fields['pessoas'].queryset = Pessoa.objects.ativo(deputado=self.oficio.deputado, regional=self.oficio.regional)
 
     _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
-    entidades = forms.ModelMultipleChoiceField(Entidade.objects.ativo(), label='',
-                                               widget=FilteredSelectMultiple(verbose_name='Pessoas ou Entidades',
+    pessoas = forms.ModelMultipleChoiceField(Pessoa.objects.ativo(), label='',
+                                               widget=FilteredSelectMultiple(verbose_name='Pessoas',
                                                                              is_stacked=False))
 
 
-class FormEntidade(MyModelForm):
+class FormInstituicao(MyModelForm):
+
+    class Meta:
+        model = Instituicao
+        exclude = []
+
+    deputado = AutoCompleteSelectField('deputados', label='Deputado', help_text=None)
+    regional = AutoCompleteSelectField('regionais', label='Regional', help_text=None)
+    cidade = AutoCompleteSelectField('cidades', label='Cidade', help_text=None)
+
+
+class FormPessoa(MyModelForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -31,17 +42,16 @@ class FormEntidade(MyModelForm):
             raise forms.ValidationError('O inicio do mandato não pode ser posterior ao fim do mandato!')
 
     class Meta:
-        model = Entidade
+        model = Pessoa
         exclude = []
 
     deputado = AutoCompleteSelectField('deputados', label='Deputado', help_text=None)
-    regional = AutoCompleteSelectField('regionais', label='Regional', help_text=None)
+    instituicao = AutoCompleteSelectField('instituicao', label='Instituição', help_text=None)
     cargo = AutoCompleteSelectField('cargos', label='Cargo', help_text=None)
     partido = AutoCompleteSelectField('partidos', label='Partido', help_text=None)
-    cidade = AutoCompleteSelectField('cidades', label='Cidade', help_text=None)
 
 
-class FormContatoEntidade(forms.ModelForm):
+class FormTelefonePessoa(forms.ModelForm):
 
     def clean_telefone(self):
         data = re.sub('\D', '', str(self.cleaned_data.get('telefone', '')))
@@ -51,25 +61,25 @@ class FormContatoEntidade(forms.ModelForm):
 
         return data
 
-    def clean_fax(self):
-        data = re.sub('\D', '', str(self.cleaned_data.get('fax', '')))
+    class Meta:
+        model = TelefonePessoa
+        exclude = []
 
-        if len(data) not in (0, 10, 11):
-            raise forms.ValidationError('Fax inválido!')
 
-        return data
-
-    def clean_celular(self):
-        data = re.sub('\D', '', str(self.cleaned_data.get('celular', '')))
-
-        if len(data) not in (0, 10, 11):
-            raise forms.ValidationError('Celular inválido!')
-
-        return data
+class FormEmailPessoa(forms.ModelForm):
 
     class Meta:
-        model = ContatoEntidade
+        model = EmailPessoa
         exclude = []
+
+
+class FormEnderecoPessoa(forms.ModelForm):
+
+    class Meta:
+        model = EnderecoPessoa
+        exclude = []
+
+    cidade = AutoCompleteSelectField('cidades', label='Cidade', help_text=None)
 
 
 class FormOficio(MyModelForm):
