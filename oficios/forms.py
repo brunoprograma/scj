@@ -1,4 +1,5 @@
 import re
+from datetime import date
 from ajax_select.fields import AutoCompleteSelectField
 from django import forms
 from django.utils import timezone
@@ -38,7 +39,7 @@ class FormPessoa(MyModelForm):
         ini = cleaned_data.get('inicio_mandato')
         fim = cleaned_data.get('fim_mandato')
 
-        if (ini and fim) and (ini > fim):
+        if ini and fim and (ini > fim):
             raise forms.ValidationError('O inicio do mandato não pode ser posterior ao fim do mandato!')
 
     class Meta:
@@ -85,9 +86,9 @@ class FormEnderecoPessoa(forms.ModelForm):
 class FormOficio(MyModelForm):
 
     def clean_data(self):
-        data = self.cleaned_data.get('data', '')
+        data = self.cleaned_data.get('data')
 
-        if data < timezone.now().date():
+        if isinstance(data, date) and data < timezone.now().date():
             raise forms.ValidationError('O ofício não pode ser anterior a data atual!')
 
         return data

@@ -33,8 +33,10 @@ class FormCompromisso(MyModelForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
+        data_ini = cleaned_data.get('data_hora_inicio')
+        data_fim = cleaned_data.get('data_hora_fim')
 
-        if cleaned_data.get('data_hora_inicio') >= cleaned_data.get('data_hora_fim'):
+        if data_ini and data_fim and data_ini >= data_fim:
             raise forms.ValidationError('Data e hora de início anterior a data e hora de termino!')
 
         return cleaned_data
@@ -51,11 +53,15 @@ class FormVoo(MyModelForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
+        data_p = cleaned_data.get('data_hora_partida')
+        cidade_p = cleaned_data.get('cidade_partida')
+        data_c = cleaned_data.get('data_hora_chegada')
+        cidade_c = cleaned_data.get('cidade_chegada')
 
-        if cleaned_data.get('data_hora_partida') >= cleaned_data.get('data_hora_chegada'):
+        if data_p and data_c and data_p >= data_c:
             raise forms.ValidationError('Data e hora de partida anterior a data e hora de chegada!')
 
-        if cleaned_data.get('cidade_partida') == cleaned_data.get('cidade_chegada'):
+        if cidade_p and cidade_c and cidade_p == cidade_c:
             raise forms.ValidationError('A cidade de chegada deve ser diferente da cidade de partida!')
 
         return cleaned_data
